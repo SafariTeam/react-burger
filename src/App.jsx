@@ -35,8 +35,8 @@ function App() {
     <div className="App">
       <AppHeader/>
       <main>
-        <BurgerIngredients ingredients={constructorData}/>
-        {state.hasError && <BurgerConstructor items={state.ingredients}/>}
+        <BurgerIngredients ingredients={state.ingredients}/>
+        {state.hasError && <BurgerConstructor items={constructorData}/>}
       </main>
     </div>
   );
