@@ -14,13 +14,15 @@ function App() {
   });
 
   React.useEffect(() => {
-    try{
-      const getProductData = async () => {
+    const url = 'https://norma.nomoreparties.space/api/ingredients';
+    
+    const getProductData = async () => {
       setState({...state, isLoading: true, hasError: false});
-      const res = await fetch('https://norma.nomoreparties.space/api/ingredients');
+      const res = await fetch(url);
       const data = await res.json();
       setState({...state, ingredients: data.data, isLoading: false, hasError: data.success });
       }
+    try{
       getProductData();
     }
     catch(e)
