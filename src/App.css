@@ -1,0 +1,21 @@
+html, body {
+  margin: 0px;
+  padding: 0px;
+  background-color: #131316;
+  height: 100%;
+}
+
+.App #root {
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  align-items: stretch;
+  height: 90vh;
+  width: 100%;
+  justify-content: center;
+  flex-grow: 1;
+}
