@@ -5,6 +5,7 @@ import './App.css';
 import BurgerConstructor from './components/BurgerConstructor';
 import constructorData from './utils/data';
 import data from './utils/data';
+import {url} from './utils/appsettings';
 
 function App() {
   const [state, setState] = React.useState({
@@ -14,11 +15,15 @@ function App() {
   });
 
   React.useEffect(() => {
-    const url = 'https://norma.nomoreparties.space/api/ingredients';
-    
     const getProductData = async () => {
       setState({...state, isLoading: true, hasError: false});
       const res = await fetch(url);
+
+      if(!res.ok) {
+        setState({...state, isLoading: false, hasError: true});
+        throw new Error(`Error: ${res.status}`);
+      }
+        
       const data = await res.json();
       setState({...state, ingredients: data.data, isLoading: false, hasError: data.success });
       }

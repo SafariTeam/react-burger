@@ -25,4 +25,16 @@ button:hover {
 
 .active {
     color: #F2F2F3;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-decoration: none;
+}
+
+.link {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #8585AD;
+    text-decoration: none;
 }

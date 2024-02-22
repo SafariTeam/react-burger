@@ -1,0 +1,7 @@
+.burgerdata {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 45%;
+    position: relative;
+}

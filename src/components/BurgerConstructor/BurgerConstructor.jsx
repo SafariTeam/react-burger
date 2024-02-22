@@ -1,38 +1,9 @@
 import React from "react";
-import {ConstructorElement, DragIcon, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
-
-const ingredientsPropTypes = PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    v: PropTypes.number.isRequired
-});
-
-const ConstructorItem = ({item}) => (
-    <div className={style.dragItem}>
-        <div className="mr-6" style={{width: '32px'}}>
-            <DragIcon type="primary" />
-        </div>
-        <div style={{width: '100%'}}>
-            <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image_mobile} 
-                style={{with: '100%'}}
-            />
-        </div>
-    </div>
-);
+import ConstructorItem from "./ConstructorItem";
+import ingredientsPropTypes from '../../utils/IngredientsTypes';
 
 const BurgerConstructor = ({items}) => {
     const firstItem = items[0];
@@ -81,10 +52,6 @@ const BurgerConstructor = ({items}) => {
             
         </div>
     );
-}
-
-ConstructorItem.prototype = {
-    item: PropTypes.shape(ingredientsPropTypes).isRequired
 }
 
 BurgerConstructor.prototype = {

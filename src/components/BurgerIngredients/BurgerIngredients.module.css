@@ -10,7 +10,6 @@
     flex-direction: column;
     max-width: 600px;
     padding: 0px 5px 0px 0px;
-    
 }
 
 .contentwrap>section>h2 {
@@ -20,14 +19,6 @@
 .ingredientwrap {
     display: flex;
     flex-flow: row wrap;
-}
-
-.burgerdata {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 45%;
-    position: relative;
 }
 
 span {
@@ -49,4 +40,9 @@ span {
     border-radius: 0px;
     background-clip: content-box;
     background-color: #8585AD;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
 }

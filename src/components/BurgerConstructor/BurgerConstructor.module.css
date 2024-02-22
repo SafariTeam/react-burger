@@ -19,12 +19,6 @@
     align-items: center;
 }
 
-.dragItem {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-}
-
 span {
     display: flex;
     flex-flow: row nowrap;

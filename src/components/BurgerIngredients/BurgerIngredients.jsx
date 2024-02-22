@@ -1,40 +1,15 @@
 import React from "react";
-import {Counter, CurrencyIcon , Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './BurgerIngredients.module.css';
 import PropTypes from 'prop-types';
-
-const ingredientsPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired
-});
-
-const Ingredient = ({ data, count }) => (
-    <div className={style.burgerdata + ' mr-6 mb-8'}>
-        {count > 0 && <Counter size="small"/>}
-        <img src={data.image}/>
-        <span className={style.price + ' m-1 text text_type_digits-default'}>
-            <span className="pr-3">{data.price}</span>
-            <CurrencyIcon type="primary" />
-        </span>
-        <span style={{textAlign: 'center'}}>{data.name}</span>
-    </div>
-);
+import IngredientsTypes from "../../utils/IngredientsTypes";
+import Ingredient from "./Ingredient";
 
 const BurgerIngredients = ({ingredients}) =>
 {
     const ingredientsGroup = Object.groupBy(ingredients, ({type}) => type);
     return (
-        <section className="mr-10" style={{display: 'flex', flexDirection: 'column'}}>
+        <section className={`${style.main} mr-10`}>
             <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
             <div className={style.navigation}>
                 <Tab value="one" active={true} onClick={()=>{}}>Булки</Tab>
@@ -56,7 +31,7 @@ const BurgerIngredients = ({ingredients}) =>
 };
 
 BurgerIngredients.prototype = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired
+    ingredients: PropTypes.arrayOf(IngredientsTypes).isRequired
 };
 
 Ingredient.prototype = {
