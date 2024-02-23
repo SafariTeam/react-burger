@@ -1,7 +1,6 @@
 import React from "react";
 import style from './OrderDetails.module.css';
 import PropTypes from 'prop-types';
-import image from '../../images/7fc90c4fa8d58fc7f2d482c801de99e4.png';
 
 const OrderDetails = () => {
     return (
