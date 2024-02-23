@@ -6,7 +6,7 @@ import image from '../../images/7fc90c4fa8d58fc7f2d482c801de99e4.png';
 const OrderDetails = () => {
     return (
         <div className={style.order}>
-            <span className={`${style.orderNumber} text text_type_digits-large mt-10`}>034536</span>
+            <span className={`${style.orderNumber} text text_type_digits-large`}>034536</span>
             <span className="text text_type_main-medium mt-8">идентификатор заказа</span>
             {/* <img src={image} height="120px" className="m-15"/> */}
             <div className={`${style.image} m-15`}/>
