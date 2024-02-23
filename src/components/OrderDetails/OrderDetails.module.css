@@ -1,0 +1,20 @@
+.order {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.orderNumber {
+    text-shadow: 0px 0px 20px #4C4CFF;
+}
+
+.image {
+    background-image: url('../../images/7fc90c4fa8d58fc7f2d482c801de99e4.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 120px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+}

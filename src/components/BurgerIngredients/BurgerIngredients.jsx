@@ -34,10 +34,4 @@ BurgerIngredients.prototype = {
     ingredients: PropTypes.arrayOf(IngredientsTypes).isRequired
 };
 
-Ingredient.prototype = {
-    img: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired
-}
-
 export default BurgerIngredients;

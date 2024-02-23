@@ -4,8 +4,16 @@ import style from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import ConstructorItem from "./ConstructorItem";
 import ingredientsPropTypes from '../../utils/IngredientsTypes';
+import Modal from "../Modal";
+import ModalOverlay from '../ModalOverlay';
+import OrderDetails from "../OrderDetails";
 
 const BurgerConstructor = ({items}) => {
+    const [visible, updateVisible] = React.useState(false);
+
+    function displayModal() {
+        updateVisible(!visible);
+    }
     const firstItem = items[0];
     const lastItem = items[items.length-1];
     const actionItems = items.slice(1,-1);
@@ -45,11 +53,11 @@ const BurgerConstructor = ({items}) => {
                     <span className="pr-3">{ttlPrice}</span>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="medium">
+                <Button htmlType="button" type="primary" size="medium" onClick={displayModal}>
                     Оформить заказ
                 </Button>
             </section>
-            
+            {visible ? <><Modal onClose={()=>displayModal()}><OrderDetails/></Modal><ModalOverlay onClose={()=>displayModal()}/></> : null}
         </div>
     );
 }

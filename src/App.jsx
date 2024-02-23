@@ -5,7 +5,7 @@ import './App.css';
 import BurgerConstructor from './components/BurgerConstructor';
 import constructorData from './utils/data';
 import data from './utils/data';
-import {url} from './utils/appsettings';
+import {url} from './utils/AppSettings';
 
 function App() {
   const [state, setState] = React.useState({
