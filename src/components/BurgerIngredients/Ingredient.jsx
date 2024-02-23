@@ -25,7 +25,7 @@ const Ingredient = ({ data, count }) => {
             </span>
             <span style={{textAlign: 'center'}}>{data.name}</span>
         </div>
-        {visible ? <><Modal onClose={()=>displayModal()}><IngredientDetails ingredient={data}/></Modal><ModalOverlay onClose={()=>displayModal()}/></> : null}
+        {visible ? <><Modal onClose={()=>displayModal()} title={"Детали ингридиента"}><IngredientDetails ingredient={data}/></Modal><ModalOverlay onClose={()=>displayModal()}/></> : null}
         </>
     )
 };
