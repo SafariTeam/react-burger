@@ -4,35 +4,32 @@ import BurgerIngredients from './components/BurgerIngredients';
 import './App.css';
 import BurgerConstructor from './components/BurgerConstructor';
 import constructorData from './utils/data';
+import {url} from './utils/appsettings';
 import data from './utils/data';
-import {url} from './utils/AppSettings';
+
+const getProductData = async () => {
+  const res = await fetch(url);
+  if(!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  const data = await res.json();
+  return data.data;
+}
 
 function App() {
   const [state, setState] = React.useState({
     ingredients: [],
-    isLoading: false,
     hasError: false
   });
 
   React.useEffect(() => {
-    const getProductData = async () => {
-      setState({...state, isLoading: true, hasError: false});
-      const res = await fetch(url);
-
-      if(!res.ok) {
-        setState({...state, isLoading: false, hasError: true});
-        throw new Error(`Error: ${res.status}`);
-      }
-        
-      const data = await res.json();
-      setState({...state, ingredients: data.data, isLoading: false, hasError: data.success });
-      }
     try{
-      getProductData();
+      setState({...state, hasError: false});
+      getProductData().then(data => setState({...state, ingredients: data}));
     }
     catch(e)
     {
-      setState({...state, ingredients: data.data, isLoading: false, hasError: true });
+      setState({...state, hasError: true });
     }
   },[]);
   
@@ -40,7 +37,7 @@ function App() {
     <div className="App">
       <AppHeader/>
       <main>
-      {state.hasError && <BurgerIngredients ingredients={state.ingredients}/>}
+      {!state.hasError && state.ingredients.length > 0 && <BurgerIngredients ingredients={state.ingredients}/>}
       <BurgerConstructor items={constructorData}/>
       </main>
     </div>

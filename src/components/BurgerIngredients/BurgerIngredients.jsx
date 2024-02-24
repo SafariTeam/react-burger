@@ -18,11 +18,11 @@ const BurgerIngredients = ({ingredients}) =>
             </div>
             <div className={`${style.contentwrap} mt-10 mb-10 ml-4`}>
                 <div className={style.ingredientwrap}>
-                    <h2 className="text text_type_main-medium mb-6" style={{width: '100%'}}>Булки</h2>
+                    <h2 className="text text_type_main-medium mb-6">Булки</h2>
                     {ingredientsGroup.bun.map((data, index) => <Ingredient key={index} data={data}/>)}
-                    <h2 className="text text_type_main-medium mb-6" style={{width: '100%'}}>Соусы</h2>
+                    <h2 className="text text_type_main-medium mb-6">Соусы</h2>
                     {ingredientsGroup.sauce.map((data, index) => <Ingredient key={index} data={data}/>)}
-                    <h2 className="text text_type_main-medium mb-6" style={{width: '100%'}}>Начинки</h2>
+                    <h2 className="text text_type_main-medium mb-6">Начинки</h2>
                     {ingredientsGroup.main.map((data, index) => <Ingredient key={index} data={data}/>)}
                 </div>
             </div>

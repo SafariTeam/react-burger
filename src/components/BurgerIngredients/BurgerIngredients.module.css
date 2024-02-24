@@ -46,3 +46,7 @@ span {
     display: flex;
     flex-direction: column;
 }
+
+h2 {
+    width: 100%;
+}
