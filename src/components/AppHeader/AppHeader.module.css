@@ -1,0 +1,40 @@
+.root {
+    background-color: #1C1C21;
+    justify-content: space-evenly;
+    display: flex;
+    color: #8585AD;
+}
+
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+button {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border: 0px;
+    background-color: transparent;
+    color: #8585AD;
+}
+
+button:hover {
+    color: #b0b0cf;
+}
+
+.active {
+    color: #F2F2F3;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-decoration: none;
+}
+
+.link {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #8585AD;
+    text-decoration: none;
+}

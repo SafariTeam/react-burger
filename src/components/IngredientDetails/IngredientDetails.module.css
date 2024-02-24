@@ -1,0 +1,24 @@
+.contentWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ingredientDataBlock {
+    display: flex;
+    flex-direction: row nowrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.ingredientData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

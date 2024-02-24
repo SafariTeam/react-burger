@@ -1,0 +1,26 @@
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 720px;
+    min-height: 250px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    border: 1px solid rgb(76, 76, 255, 0.2);
+    z-index: 1000;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.title {
+    flex-grow: 1;
+}
