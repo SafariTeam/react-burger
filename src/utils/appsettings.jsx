@@ -1,6 +1,1 @@
-const url = 'https://norma.nomoreparties.space/api/ingredients';
-
-export
-{
-    url
-}
+export const URL = 'https://norma.nomoreparties.space/api';
