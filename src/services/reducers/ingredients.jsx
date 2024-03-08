@@ -7,7 +7,6 @@ import {
     DELETE_ITEM,
     MOVE_ITEM
 } from '../actions/ingredients';
-import update from 'immutability-helper'
 
 const initialState = {
     bunItem: null,
@@ -63,21 +62,12 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
         case MOVE_ITEM: {
-            // const cloneItems = [...state.addedItems];
-            // console.log(action.dragIndex,1,action.item);
-            // cloneItems.splice(action.hoverIndex,1,action.item);
-            // console.log(cloneItems);
-            // return {
-            //     ...state,
-            //     addedItems: cloneItems
-            // }
-            return update(state, {
-                addedItems:
-                    { $splice: [
-                        [action.dragIndex, 1],
-                        [action.hoverIndex, 0, state.addedItems[action.dragIndex]],
-                      ]}
-            });
+            const ingredients = [...state.addedItems];
+            ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
+            return {
+                ...state,
+                addedItems: ingredients
+            }
         }
         default:
             return state;

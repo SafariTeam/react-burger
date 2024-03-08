@@ -31,7 +31,9 @@ const BurgerConstructor = () => {
         }, [addedItems]
     );
 
-    const ttlPrice = addedItems.length > 0 || bunItem ? orderSum(addedItems, bunItem?.price, 'price') : 0;
+    const ttlPrice = useMemo(() => {
+        return addedItems.length > 0 || bunItem ? orderSum(addedItems, bunItem?.price, 'price') : 0;
+    },[addedItems,bunItem]); 
 
     const [{ isHover }, dropTarget] = useDrop({
         accept: 'ingredient',
