@@ -5,7 +5,8 @@ import {
     SET_ACTIVE_TAB,
     ADD_ITEM,
     DELETE_ITEM,
-    MOVE_ITEM
+    MOVE_ITEM,
+    CLEAR_ITEMS
 } from '../actions/ingredients';
 
 const initialState = {
@@ -59,6 +60,13 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 addedItems: state.addedItems.filter(item => item.index !== action.item.index)
+            }
+        }
+        case CLEAR_ITEMS: {
+            return {
+                ...state,
+                addedItems: [],
+                bunItem: null
             }
         }
         case MOVE_ITEM: {

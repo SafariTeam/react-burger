@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import AppHeader from './components/AppHeader';
-import BurgerIngredients from './components/BurgerIngredients';
-import './App.css';
-import BurgerConstructor from './components/BurgerConstructor';
+import AppHeader from '../AppHeader';
+import BurgerIngredients from '../BurgerIngredients';
+import './App.module.css';
+import BurgerConstructor from '../BurgerConstructor';
 import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from './services/actions/ingredients';
+import { getItems } from '../../services/actions/ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -24,7 +24,7 @@ function App() {
       <main>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients/>
-          <BurgerConstructor items={[]}/>
+          <BurgerConstructor/>
         </DndProvider>
       </main>}
     </div>

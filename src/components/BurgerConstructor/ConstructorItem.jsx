@@ -34,17 +34,16 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
               return
             }
-            // Dragging upwards
             if (drgIndex > hoverIndex && hoverClientY > hoverMiddleY) {
               return;
             }
-            moveCard(dragIndex, hoverIndex, item);
+            moveCard(drgIndex, hoverIndex, item);
             itm.dragIndex = hoverIndex;
         }
     });
 
     const moveCard = useCallback((dragIndex, hoverIndex, item) => {
-        dispatch({type: MOVE_ITEM, dragIndex: dragIndex, hoverIndex: hoverIndex, item: item});
+        dispatch({type: MOVE_ITEM, dragIndex: dragIndex, hoverIndex: hoverIndex, item: {...item,dragIndex}});
     }, [dispatch]);
 
     const [{ opacity }, drag] = useDrag({
@@ -61,7 +60,6 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
         dispatch({type: DELETE_ITEM, item: {...item, index}});
     };
 
-    console.log('op',opacity);
     const extraStyle = !isLocked ? null : {with: '100%'};
     drag(drop(ref));
     return (
@@ -72,7 +70,7 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
             <div style={{width: '100%'}}>
                 <ConstructorElement
                     type={type}
-                    text={item.name}
+                    text={`${item.name} ${type === 'top' ? '(верх)' : type === 'bottom' ? '(низ)' : ''}`}
                     price={item.price}
                     thumbnail={item.image_mobile} 
                     style={extraStyle}
@@ -84,13 +82,13 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
     )
 }
 
-ConstructorItem.prototype = {
+ConstructorItem.propTypes = {
     item: PropTypes.shape(ingredientsPropTypes).isRequired,
     isDraggable: PropTypes.bool.isRequired,
-    isLocked: PropTypes.bool.isRequired,
+    isLocked: PropTypes.bool,
     type: PropTypes.string,
     index: PropTypes.string,
-    dragIndex: PropTypes.func
+    dragIndex: PropTypes.number
 }
 
 export default ConstructorItem;

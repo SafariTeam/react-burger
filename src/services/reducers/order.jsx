@@ -14,14 +14,12 @@ const initialState = {
 export const orderReducer = (state = initialState, action) => {
     switch(action.type) {
         case MAKE_ORDER_REQUEST: {
-            console.log('req',state);
             return {
                 ...state,
                 isProcceed: true
             };
         }
         case MAKE_ORDER_SUCCESS: {
-            console.log('success',state);
             return {
                 ...state,
                 isProcceed: false,
@@ -29,7 +27,6 @@ export const orderReducer = (state = initialState, action) => {
             };
         }
         case MAKE_ORDER_FAILED: {
-            console.log('fail',state);
             return {
                 ...state,
                 isProcceed: false,
@@ -38,6 +35,6 @@ export const orderReducer = (state = initialState, action) => {
             };
         }
         default:
-            return {...state}
+            return state
     }
 }

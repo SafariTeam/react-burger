@@ -7,27 +7,34 @@ import OrderDetails from "../OrderDetails";
 import {generateKey, orderSum} from '../../utils/helpers';
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
-import { MOVE_ITEM, addIngredient } from "../../services/actions/ingredients";
+import { CLEAR_ITEMS, addIngredient } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
+import { useModal } from "../../services/hooks/useModal";
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const { addedItems, bunItem } = useSelector(state => state.ingredients);
-
-    const [visible, updateVisible] = useState(false);
+    const { toggleModal, openModal, closeModal } = useModal();
 
     function displayModal() {
-        updateVisible(!visible);
+        closeModal();
+        dispatch({type: CLEAR_ITEMS});
     }
 
     function createOrder() {
         dispatch(makeOrder([...addedItems,bunItem]));
-        updateVisible(!visible);
+        openModal();
     }
+
+    const card = useCallback((item,index) => {
+        return (
+            <ConstructorItem key={item.uid} item={{...item,dragIndex: index}} isDraggable={true} index={item.uid} dragIndex={index} />
+        )
+    },[])
 
     const content = useMemo(
         () => {
-                return addedItems.map((item,index) => {return <ConstructorItem key={index + generateKey(item._id)} item={item} isDraggable={true} index={item.index} dragIndex={index} />})
+                return addedItems.map((item,index) => {return card(item,index)});
         }, [addedItems]
     );
 
@@ -40,7 +47,7 @@ const BurgerConstructor = () => {
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {dispatch(addIngredient(item,generateKey(item._id)))}
+        drop(item) {dispatch(addIngredient({...item,uid: generateKey(item._id)}))}
     });
 
     return (
@@ -63,7 +70,7 @@ const BurgerConstructor = () => {
                     Оформить заказ
                 </Button>
             </section>
-            {visible ? <Modal onClose={displayModal}><OrderDetails/></Modal> : null}
+            {toggleModal ? <Modal onClose={displayModal}><OrderDetails/></Modal> : null}
         </div>
     );
 }

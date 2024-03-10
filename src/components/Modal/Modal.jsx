@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ModalOverlay from "../ModalOverlay";
 
 const Modal = props => {
+    const modal = document.getElementById('modals');
     const {title, children, onClose} = props;
 
     useEffect(()=>{
@@ -31,11 +32,11 @@ const Modal = props => {
                 </div>
                 {children}
             </div>
-        </>,document.body
+        </>,modal
     )
 };
 
-Modal.prototype = {
+Modal.propTypes = {
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
     onClose: PropTypes.func.isRequired

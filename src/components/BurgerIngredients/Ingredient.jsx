@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './Ingredient.module.css';
 import PropTypes from 'prop-types';
@@ -7,12 +7,13 @@ import IngredientsTypes from "../../utils/IngredientsTypes";
 import IngredientDetails from "../IngredientDetails";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import { useModal } from "../../services/hooks/useModal";
 
 const Ingredient = ({ data }) => {
-    const [visible, updateVisible] = useState(false);
+    const { toggleModal, openModal, closeModal } = useModal();
 
     function displayModal() {
-        updateVisible(!visible);
+        !toggleModal ? openModal() : closeModal();
     }
 
     const { addedItems, bunItem } = useSelector(state => state.ingredients);
@@ -29,7 +30,7 @@ const Ingredient = ({ data }) => {
         })
       });
     
-    return ( 
+    return (
         <>
             <div className={style.burgerdata + ' mr-6 mb-8'} onClick={displayModal}  ref={ref} style={{ opacity }}>
                 {count > 0 && <Counter size="small" count={count}/>}
@@ -40,7 +41,7 @@ const Ingredient = ({ data }) => {
                 </span>
                 <span style={{textAlign: 'center'}}>{data.name}</span>
             </div>
-            {visible ? 
+            {toggleModal ? 
             <Modal onClose={displayModal} title={"Детали ингридиента"}>
                 <IngredientDetails ingredient={data}/>
             </Modal> : null}
@@ -48,7 +49,7 @@ const Ingredient = ({ data }) => {
     )
 };
 
-Ingredient.prototype = {
+Ingredient.propTypes = {
     data: PropTypes.shape(IngredientsTypes).isRequired,
     count: PropTypes.number
 }
