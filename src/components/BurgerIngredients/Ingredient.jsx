@@ -50,8 +50,7 @@ const Ingredient = ({ data }) => {
 };
 
 Ingredient.propTypes = {
-    data: PropTypes.shape(IngredientsTypes).isRequired,
-    count: PropTypes.number
+    data: IngredientsTypes.isRequired
 }
 
 export default Ingredient;

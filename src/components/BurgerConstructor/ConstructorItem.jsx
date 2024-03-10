@@ -2,7 +2,7 @@ import React, { useRef, useCallback } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ConstructorItem.module.css";
 import PropTypes from 'prop-types';
-import ingredientsPropTypes from '../../utils/IngredientsTypes';
+import IngredientsTypes from '../../utils/IngredientsTypes';
 import { useDispatch } from "react-redux";
 import { DELETE_ITEM, MOVE_ITEM } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from 'react-dnd'
@@ -83,7 +83,7 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
 }
 
 ConstructorItem.propTypes = {
-    item: PropTypes.shape(ingredientsPropTypes).isRequired,
+    item: IngredientsTypes.isRequired,
     isDraggable: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool,
     type: PropTypes.string,

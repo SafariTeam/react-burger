@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './BurgerIngredients.module.css';
 import Ingredient from "./Ingredient";
@@ -52,7 +52,9 @@ const BurgerIngredients = () =>
         dispatch(setActiveTab(node));
     };
 
-    const iGroups = Object.groupBy(ingredients, ({type}) => type);
+    const iGroups = useMemo(()=>{
+        return Object.groupBy(ingredients, ({type}) => type);
+    },[ingredients]);
     
     return (
         <section className={`${style.main} mr-10`}>
@@ -63,9 +65,9 @@ const BurgerIngredients = () =>
                 <Tab value="filling" active={activeTab === "filling"} onClick={pickTab}>Начинки</Tab>
             </div>
             <div className={`${style.contentwrap} mt-10 mb-10 ml-4`} id="ingredients" ref={mainRef}>
-                {ingredients.length > 0 && <div className={style.ingredientwrap}>
+                {ingredients.length > 0 && iGroups && <div className={style.ingredientwrap}>
                     <h2 className="text text_type_main-medium mb-6" id="bun" ref={bunRef}>Булки</h2>
-                    {iGroups.bun.map((data, index) => <Ingredient key={data._id} data={data}/>)}
+                    {iGroups.bun.map((data, index) => <Ingredient key={data._id} data={{...data}}/>)}
                     <h2 className="text text_type_main-medium mb-6" id="sauce" ref={sauceRef}>Соусы</h2>
                     {iGroups.sauce.map((data, index) => <Ingredient key={data._id} data={data}/>)}
                     <h2 className="text text_type_main-medium mb-6" id="filling" ref={fillingRef}>Начинки</h2>
