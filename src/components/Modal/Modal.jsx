@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { createPortal } from 'react-dom';
 import style from './Modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import ModalOverlay from "../ModalOverlay";
 
 const Modal = props => {
+    const modal = document.getElementById('modals');
     const {title, children, onClose} = props;
 
-    React.useEffect(()=>{
+    useEffect(()=>{
         document.addEventListener('keydown',closeModal);
         return () => {document.removeEventListener('keydown',closeModal);};
     },[]);
@@ -31,11 +32,11 @@ const Modal = props => {
                 </div>
                 {children}
             </div>
-        </>,document.body
+        </>,modal
     )
 };
 
-Modal.prototype = {
+Modal.propTypes = {
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
     onClose: PropTypes.func.isRequired

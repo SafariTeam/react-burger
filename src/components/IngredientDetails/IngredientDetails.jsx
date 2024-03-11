@@ -7,7 +7,7 @@ const IngredientDetails = ({ingredient}) => {
     return (
         <div className={`${style.contentWrap} mb-15`}>
             <div className={`${style.image} mb-4`}>
-                <img src={ingredient.image_large}/>
+                <img src={ingredient.image_large} alt={ingredient.name}/>
             </div>
             <span className="text text_type_main-medium">{ingredient.name}</span>
             <div className={`${style.ingredientDataBlock} mt-8`}>
@@ -32,8 +32,8 @@ const IngredientDetails = ({ingredient}) => {
     )
 };
 
-IngredientDetails.prototype = {
-    ingredient: PropTypes.shape(IngredientsTypes).isRequired
+IngredientDetails.propTypes = {
+    ingredient: IngredientsTypes.isRequired
 }
 
 export default IngredientDetails;
