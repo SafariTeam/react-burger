@@ -38,7 +38,7 @@ function App() {
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
-          <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} user={user} isAuth={true}/>}/>
+          <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} user={user}/>}/>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>
 
           <Route path='*' element={<NotFound/>}/>
