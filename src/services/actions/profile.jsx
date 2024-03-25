@@ -31,6 +31,7 @@ export const Register = (user) => (dispatch) => {
             setCookie('authToken', authToken);
         }
         localStorage.setItem('refreshToken',res.refreshToken);
+        setCookie('password',user.password);
         dispatch({type: REGISTER_SUCCESS, user: res.user, success: res.success});
     })
     .catch(error => {
@@ -73,6 +74,7 @@ export const UpdatePassword = (restorationData) => (dispatch) => {
     });
     request('password-reset/reset',data)
     .then(res => {
+        setCookie('password',restorationData.password);
         dispatch({type: FORGOT_PASSWORD, message: res.message, success: res.success});
     })
     .catch(error => {
@@ -95,6 +97,7 @@ export const Logout = () => (dispatch) => {
     request('auth/logout',data)
     .then(res => {
         deleteCookie('authToken');
+        deleteCookie('password');
         localStorage.removeItem('refreshToken');
         dispatch({type: LOGOUT_SUCCESS, success: res.success, message: res.message});
     })
@@ -134,6 +137,9 @@ export const AuthUser = (userdata) => (dispatch) => {
 
 export const RequestUser = () => (dispatch) => {
     UpdateToken();
+    const token = localStorage.getItem('refreshToken');
+    if(!token)
+        return;
     const data = {
       method: "GET",
       headers: {
@@ -145,7 +151,7 @@ export const RequestUser = () => (dispatch) => {
     });
     request('auth/user',data)
     .then(res => {
-        dispatch({type: UPDATE_PROFILE_DATA, success: res.success, user: res.user});
+        dispatch({type: UPDATE_PROFILE_DATA, success: res.success, user: res.user, password: getCookie('password')});
     })
     .catch(error => {
         dispatch({type: PROFILE_FAIL, error: error});
@@ -169,6 +175,7 @@ export const UpdateUser = (user) => (dispatch) => {
     });
     request('auth/user',data)
     .then(res => {
+        setCookie('password',user.password);
         dispatch({type: UPDATE_PROFILE_DATA, success: res.success, user: res.user});
     })
     .catch(error => {
@@ -177,7 +184,10 @@ export const UpdateUser = (user) => (dispatch) => {
 }
 
 const UpdateToken = () => {
-    const body = {token: localStorage.getItem('refreshToken')};
+    const token = localStorage.getItem('refreshToken');
+    if(!token)
+        return;
+    const body = {token: token};
     const data = {
     method: "POST",
     body: JSON.stringify(body),

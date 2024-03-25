@@ -14,7 +14,8 @@ const initialState = {
     user: null,
     message: '',
     isError: false,
-    isLoding: false
+    isLoding: false,
+    password: ''
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -79,7 +80,8 @@ export const profileReducer = (state = initialState, action) => {
                 isLoding: false,
                 isError: false,
                 success: action.success,
-                user: action.user
+                user: action.user,
+                password: action.password
             }
         }
         case LOGOUT_SUCCESS: {

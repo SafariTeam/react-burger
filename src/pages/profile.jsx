@@ -14,7 +14,7 @@ export default function ProfilePage () {
     const [isEdit,setEdit] = useState(true);
 
     useEffect(()=> {
-        user && setUserData({...user, name: user.name, email: user.email, password: ''});
+        user && setUserData({...user, name: user.name, email: user.email, password: getCookie('password')});
     },[]);
 
     const Submit = e => {
