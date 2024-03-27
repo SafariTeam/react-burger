@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children, authIsRequired }) {
         dispatch(RequestUser());
     },[dispatch]);
 
-    if(!authorized)
+    if(!authorized && !user)
         return null;
 
     if (authIsRequired)
