@@ -93,7 +93,8 @@ export const profileReducer = (state = initialState, action) => {
                 isLoding: false,
                 isError: false,
                 success: action.success,
-                user: null
+                user: null,
+                authorized: false
             }
         }
         default: 
