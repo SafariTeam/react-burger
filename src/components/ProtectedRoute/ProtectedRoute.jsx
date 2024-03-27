@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { RequestUser } from "../../services/actions/profile";
 import { useEffect } from "react";
+import { getCookie } from "../../utils/cookies";
 
 export default function ProtectedRoute({ children, authIsRequired }) {
-    const { user, authorized, isError } = useSelector(state => state.profile);
+    const { user, isError } = useSelector(state => state.profile);
     const location = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(RequestUser());
     },[dispatch]);
-
-    if(!authorized && !user)
-        return null;
+    
+    if(getCookie('authToken') && !user)
+        return;
 
     if (authIsRequired)
         return !isError && user ? 

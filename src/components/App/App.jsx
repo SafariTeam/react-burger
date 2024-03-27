@@ -8,6 +8,7 @@ import ProtectedRoute from '../ProtectedRoute';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
 import IngredientDetails from '../IngredientDetails';
+import { RequestUser } from '../../services/actions/profile';
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getItems());
+    dispatch(RequestUser());
   },[dispatch]);
 
   return (
@@ -31,8 +33,8 @@ function App() {
         <Routes location={background || location}>
           {!isLoading && !isFailed && 
           <Route path='/' index element={<MainPage/>}/>}
-          <Route path='/register' element={<ProtectedRoute children={<RegisterPage/>} authIsRequired={false}/>}/>
-          <Route path='/login' element={<ProtectedRoute children={<LoginPage/>} authIsRequired={false}/>}/>
+          <Route path='/register' element={<RegisterPage/>}/>
+          <Route path='/login' element={<LoginPage/>}/>
           <Route path='/forgot-password' element={<ProtectedRoute children={<ForgotPassword/>} authIsRequired={false}/>}/>
           <Route path='/reset-password' element={<ProtectedRoute children={<ResetPassword/>} authIsRequired={false}/>}/>
           <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} authIsRequired={true}/>}/>
