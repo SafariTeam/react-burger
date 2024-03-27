@@ -31,8 +31,8 @@ function App() {
         <Routes location={background || location}>
           {!isLoading && !isFailed && 
           <Route path='/' index element={<MainPage/>}/>}
-          <Route path='/register' element={<RegisterPage/>}/>
-          <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/register' element={<ProtectedRoute children={<RegisterPage/>} authIsRequired={false}/>}/>
+          <Route path='/login' element={<ProtectedRoute children={<LoginPage/>} authIsRequired={false}/>}/>
           <Route path='/forgot-password' element={<ProtectedRoute children={<ForgotPassword/>} authIsRequired={false}/>}/>
           <Route path='/reset-password' element={<ProtectedRoute children={<ResetPassword/>} authIsRequired={false}/>}/>
           <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} authIsRequired={true}/>}/>
