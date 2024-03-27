@@ -2,7 +2,7 @@ import styles from './page.module.css';
 import { Input, Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Register } from '../services/actions/profile';
+import { register } from '../services/actions/profile';
 import { useState } from 'react';
 
 export default function RegisterPage () {
@@ -11,7 +11,7 @@ export default function RegisterPage () {
     const [reguser, setUser] = useState({email: '', password: '', name: ''});
 
     const Submit = e => {
-        dispatch(Register(reguser));
+        dispatch(register(reguser));
         e.preventDefault();
     }
 

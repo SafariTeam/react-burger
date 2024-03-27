@@ -10,11 +10,14 @@ import { useDrop } from "react-dnd";
 import { CLEAR_ITEMS, addIngredient } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { useModal } from "../../services/hooks/useModal";
+import { useNavigate } from "react-router";
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const { addedItems, bunItem } = useSelector(state => state.ingredients);
+    const { user } = useSelector(state => state.profile);
     const { toggleModal, openModal, closeModal } = useModal();
+    const navigate = useNavigate();
 
     function displayModal() {
         closeModal();
@@ -22,8 +25,15 @@ const BurgerConstructor = () => {
     }
 
     function createOrder() {
-        dispatch(makeOrder([...addedItems,bunItem]));
-        openModal();
+        if(user)
+        {
+            dispatch(makeOrder([...addedItems,bunItem]));
+            openModal();
+        }
+        else
+        {
+            navigate('/login');
+        }
     }
 
     const card = useCallback((item,index) => {

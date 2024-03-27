@@ -15,7 +15,8 @@ const initialState = {
     message: '',
     isError: false,
     isLoding: false,
-    password: ''
+    password: '',
+    authorized: false
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -71,7 +72,8 @@ export const profileReducer = (state = initialState, action) => {
                 isLoding: false,
                 isError: false,
                 success: action.success,
-                user: action.user
+                user: action.user,
+                authorized: true
             }
         }
         case UPDATE_PROFILE_DATA: {
@@ -81,7 +83,8 @@ export const profileReducer = (state = initialState, action) => {
                 isError: false,
                 success: action.success,
                 user: action.user,
-                password: action.password
+                password: action.password,
+                authorized: true
             }
         }
         case LOGOUT_SUCCESS: {

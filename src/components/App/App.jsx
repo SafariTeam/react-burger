@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppHeader from '../AppHeader';
 import './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
-import { ForgotPassword, Ingredient, LoginPage, MainPage, NotFound, ProfilePage, ProtectedRoute, RegisterPage, ResetPassword } from '../../pages';
+import { ForgotPassword, Ingredient, LoginPage, MainPage, NotFound, ProfilePage, RegisterPage, ResetPassword } from '../../pages';
+import ProtectedRoute from '../ProtectedRoute';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
 import IngredientDetails from '../IngredientDetails';
-import { useModal } from '../../services/hooks/useModal';
 import { RequestUser } from '../../services/actions/profile';
 
 function App() {
   const location = useLocation();
   const background = location.state?.previousLocation;
   const isLoading = useSelector(state => state.ingredients.itemsRequest);
-  const { user } = useSelector(state => state.profile);
   const isFailed = useSelector(state => state.itemsFailed);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function displayModal() {
     navigate(-1);
@@ -25,7 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getItems());
-    dispatch(RequestUser());
+    //dispatch(RequestUser());
   },[dispatch]);
 
   return (
@@ -38,7 +37,7 @@ function App() {
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
-          <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} user={user}/>}/>
+          <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} authIsRequired={true}/>}/>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>
 
           <Route path='*' element={<NotFound/>}/>

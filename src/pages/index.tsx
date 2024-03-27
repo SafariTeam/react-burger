@@ -5,7 +5,6 @@ import ForgotPassword from "./forgotPassword";
 import ResetPassword from "./resetPassword";
 import NotFound from "./notFound";
 import ProfilePage from "./profile";
-import ProtectedRoute from "./protectedRoute";
 import Ingredient from "./ingredient";
 
-export { MainPage, RegisterPage, LoginPage, ForgotPassword, ResetPassword, ProfilePage, NotFound, ProtectedRoute, Ingredient }
+export { MainPage, RegisterPage, LoginPage, ForgotPassword, ResetPassword, ProfilePage, NotFound, Ingredient }

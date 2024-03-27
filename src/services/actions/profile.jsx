@@ -9,7 +9,7 @@ export const PROFILE_FAIL = 'PROFILE_FAIL';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 
-export const Register = (user) => (dispatch) => {
+export const register = (user) => (dispatch) => {
     const body = {email: user.email, password: user.password, name: user.name};
     const data = {
       method: "POST",
@@ -97,7 +97,6 @@ export const Logout = () => (dispatch) => {
     request('auth/logout',data)
     .then(res => {
         deleteCookie('authToken');
-        deleteCookie('password');
         localStorage.removeItem('refreshToken');
         dispatch({type: LOGOUT_SUCCESS, success: res.success, message: res.message});
     })

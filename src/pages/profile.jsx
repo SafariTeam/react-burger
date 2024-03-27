@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './page.module.css';
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Navigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import { Logout, RequestUser, UpdateUser } from '../services/actions/profile';
+import { Logout, UpdateUser } from '../services/actions/profile';
 import { getCookie } from '../utils/cookies';
 import { Link } from 'react-router-dom';
 
@@ -37,9 +36,11 @@ export default function ProfilePage () {
     }
 
     const isSubmit = e => {
-        e.keyCode === 13 && Submit(e);
-        setEdit(false);
-        e.preventDefault();
+        if(e.keyCode === 13)
+        {
+            Submit(e);
+            setEdit(false);
+        }
     }
 
     return (
