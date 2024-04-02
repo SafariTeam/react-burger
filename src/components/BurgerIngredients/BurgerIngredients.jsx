@@ -53,7 +53,12 @@ const BurgerIngredients = () =>
     };
 
     const iGroups = useMemo(()=>{
-        return Object.groupBy(ingredients, ({type}) => type);
+        //return Object.groupBy(ingredients, ({type}) => type);
+        return {
+            bun: ingredients?.filter((ingredient) => ingredient.type === 'bun'),
+            sauce: ingredients?.filter((ingredient) => ingredient.type === 'sauce'),
+            main: ingredients?.filter((ingredient) => ingredient.type === 'main')
+        }
     },[ingredients]);
     
     return (

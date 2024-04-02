@@ -1,9 +1,12 @@
 import React from "react";
 import style from './IngredientDetails.module.css';
-import PropTypes from 'prop-types';
-import IngredientsTypes from "../../utils/IngredientsTypes";
+import { useParams } from "react-router";
+import { GetIngredientById } from "../../utils/helpers";
 
-const IngredientDetails = ({ingredient}) => {
+const IngredientDetails = () => {
+    const id = useParams();
+    const ingredient = GetIngredientById(id);
+    if(ingredient)
     return (
         <div className={`${style.contentWrap} mb-15`}>
             <div className={`${style.image} mb-4`}>
@@ -31,9 +34,5 @@ const IngredientDetails = ({ingredient}) => {
         </div>
     )
 };
-
-IngredientDetails.propTypes = {
-    ingredient: IngredientsTypes.isRequired
-}
 
 export default IngredientDetails;

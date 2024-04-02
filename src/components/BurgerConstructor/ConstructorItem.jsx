@@ -57,6 +57,7 @@ const ConstructorItem = ({ item, isDraggable, isLocked, type, index, dragIndex }
     });
 
     const deleteItem = () => {
+        console.log(index);
         dispatch({type: DELETE_ITEM, item: {...item, index}});
     };
 

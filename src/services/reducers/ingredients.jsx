@@ -59,7 +59,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         case DELETE_ITEM: {
             return {
                 ...state,
-                addedItems: state.addedItems.filter(item => item.index !== action.item.index)
+                addedItems: state.addedItems.filter(item => item.uid !== action.item.index)
             }
         }
         case CLEAR_ITEMS: {
