@@ -3,19 +3,27 @@ import { Input, Button, EmailInput, PasswordInput } from '@ya.praktikum/react-de
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../services/actions/profile';
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
+
+//Тип будет помещен в редюсер
+type TUser = {
+    name: string;
+    email: string;
+    password: string;
+};
 
 export default function RegisterPage () {
     const dispatch = useDispatch();
-    const { user, success, isError, message } = useSelector(state => state.profile);
-    const [reguser, setUser] = useState({email: '', password: '', name: ''});
+    const { user, success, isError, message } = useSelector((state: any) => state.profile);
+    const [reguser, setUser] = useState<TUser>({email: '', password: '', name: ''});
 
-    const Submit = e => {
+    const Submit: ChangeEventHandler<HTMLFormElement> = e => {
+        // @ts-ignore
         dispatch(register(reguser));
         e.preventDefault();
     }
 
-    const onChange = e => {
+    const onChange: ChangeEventHandler<HTMLInputElement> = e => {
         setUser({...reguser, [e.target.name]: e.target.value});
         e.preventDefault();
     }

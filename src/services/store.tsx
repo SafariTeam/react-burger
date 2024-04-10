@@ -5,6 +5,8 @@ import { customMiddleware } from "../middleware/Middleware";
 import { orderReducer } from "./reducers/order";
 import { profileReducer } from "./reducers/profile";
 
+export type TRootState = ReturnType<typeof rootReducer>;
+
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     order: orderReducer,

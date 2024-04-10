@@ -160,7 +160,6 @@ export const RequestUser = () => (dispatch) => {
 export const UpdateUser = (user) => (dispatch) => {
     UpdateToken();
     const body = {...user};
-    console.log(body);
     const data = {
       method: "PATCH",
       body: JSON.stringify(body),

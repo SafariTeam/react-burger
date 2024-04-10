@@ -2,20 +2,21 @@ import styles from './page.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { ChangeEventHandler, DetailedHTMLProps, FormEventHandler, FormHTMLAttributes, useState } from 'react';
 import { AuthUser } from '../services/actions/profile';
 
 export default function LoginPage() {
     const dispatch = useDispatch();
-    const { success, user } = useSelector(state => state.profile);
-    const [loginuser, setUser] = useState({email: '', password: ''});
+    const { success, user } = useSelector((state: any) => state.profile);
+    const [loginuser, setUser] = useState<{email: string, password: string}>({email: '', password: ''});
 
-    const Submit = e => {
+    const Submit: ChangeEventHandler<HTMLFormElement> = e => {
+        // @ts-ignore
         dispatch(AuthUser(loginuser));
         e.preventDefault();
     }
 
-    const onChange = e => {
+    const onChange: ChangeEventHandler<HTMLInputElement> = e => {
         setUser({...loginuser, [e.target.name]: e.target.value});
         e.preventDefault();
     }

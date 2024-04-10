@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import AppHeader from '../AppHeader';
 import './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,17 +13,19 @@ import { RequestUser } from '../../services/actions/profile';
 function App() {
   const location = useLocation();
   const background = location.state?.previousLocation;
-  const isLoading = useSelector(state => state.ingredients.itemsRequest);
-  const isFailed = useSelector(state => state.itemsFailed);
+  const isLoading = useSelector((state: any) => state.ingredients.itemsRequest);
+  const isFailed = useSelector((state: any) => state.itemsFailed);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function displayModal() {
+  function displayModal(): void {
     navigate(-1);
   }
 
   useEffect(() => {
+    // @ts-ignore
     dispatch(getItems());
+    // @ts-ignore
     dispatch(RequestUser());
   },[dispatch]);
 

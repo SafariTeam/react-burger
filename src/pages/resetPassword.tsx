@@ -1,21 +1,22 @@
 import styles from './page.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { UpdatePassword } from '../services/actions/profile';
 
 export default function ResetPassword() {
     const dispatch = useDispatch();
-    const {message} = useSelector(store => store.profile);
-    const [restorationData,setData] = useState({password: '', token: ''});
+    const {message} = useSelector((store: any) => store.profile);
+    const [restorationData,setData] = useState<{password: string, token: string}>({password: '', token: ''});
 
-    const Submit = e => {
+    const Submit: ChangeEventHandler<HTMLFormElement> = e => {
+        // @ts-ignore
         dispatch(UpdatePassword(restorationData));
         e.preventDefault();
     }
 
-    const onChange = e => {
+    const onChange: ChangeEventHandler<HTMLInputElement> = e => {
         setData({...restorationData, [e.target.name]: e.target.value});
         e.preventDefault();
     }

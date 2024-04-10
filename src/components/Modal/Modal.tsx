@@ -1,12 +1,17 @@
-import React, {useEffect} from "react";
+import React, {FC, ReactElement, ReactNode, useEffect} from "react";
 import { createPortal } from 'react-dom';
 import style from './Modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import ModalOverlay from "../ModalOverlay";
 
-const Modal = props => {
-    const modal = document.getElementById('modals');
+type TModal = {
+    title?: string;
+    children: ReactElement;
+    onClose: Function;
+};
+
+const Modal: FC<TModal> = (props) => {
+    const modal = document.getElementById('modals') as HTMLElement;
     const {title, children, onClose} = props;
 
     useEffect(()=>{
@@ -14,7 +19,7 @@ const Modal = props => {
         return () => {document.removeEventListener('keydown',closeModal);};
     },[]);
 
-    function closeModal(e) {
+    function closeModal(e: KeyboardEvent) {
         if (e.key === "Escape") {
             onClose();
         }
@@ -35,11 +40,5 @@ const Modal = props => {
         </>,modal
     )
 };
-
-Modal.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    onClose: PropTypes.func.isRequired
-}
 
 export default Modal;

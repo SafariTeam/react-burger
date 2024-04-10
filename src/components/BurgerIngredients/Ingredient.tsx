@@ -1,12 +1,33 @@
-import React from "react";
+import React, { FC } from "react";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './Ingredient.module.css';
-import IngredientsTypes from "../../utils/IngredientsTypes";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 
-const Ingredient = ({ data }) => {
+export type TIngredient = {
+    _id: string;
+    name: string;
+    type: "main" | "sauce" | "bun";
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+    dragIndex?: number;
+    uid?: number;
+};
+
+type TParams = {
+    key: string;
+    data: TIngredient;
+};
+
+const Ingredient: FC<TParams> = ({data}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = data._id;
@@ -14,9 +35,9 @@ const Ingredient = ({ data }) => {
         navigate(`/ingredients/${id}`, {state: {previousLocation: location}});
     }
 
-    const { addedItems, bunItem } = useSelector(state => state.ingredients);
+    const { addedItems, bunItem } = useSelector((state: any) => state.ingredients);
 
-    const countItems = addedItems.filter(item => item._id === data._id).length;
+    const countItems = addedItems.filter((item: TIngredient) => item._id === data._id).length;
     const countBuns = bunItem?._id === data._id ? 1 : 0;
     const count = countItems + countBuns;
 
@@ -42,9 +63,5 @@ const Ingredient = ({ data }) => {
         </>
     )
 };
-
-Ingredient.propTypes = {
-    data: IngredientsTypes.isRequired
-}
 
 export default Ingredient;
