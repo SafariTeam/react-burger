@@ -158,7 +158,7 @@ export const RequestUser = () => (dispatch) => {
 }
 
 export const UpdateUser = (user) => (dispatch) => {
-    UpdateToken();
+    //UpdateToken();
     const body = {...user};
     const data = {
       method: "PATCH",
@@ -178,6 +178,7 @@ export const UpdateUser = (user) => (dispatch) => {
     })
     .catch(error => {
         dispatch({type: PROFILE_FAIL, error: error});
+        UpdateToken();
     })
 }
 

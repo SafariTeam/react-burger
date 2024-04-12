@@ -56,3 +56,12 @@ li>a.active {
 .description {
     color: rgba(133, 133, 173, 0.4);
 }
+
+.profilebuttons {
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    align-items: start;
+    justify-content: end;
+    width: 100%;
+}

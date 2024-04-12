@@ -7,7 +7,6 @@ import { AuthUser } from '../services/actions/profile';
 
 export default function LoginPage() {
     const dispatch = useDispatch();
-    const { success, user } = useSelector((state: any) => state.profile);
     const [loginuser, setUser] = useState<{email: string, password: string}>({email: '', password: ''});
 
     const Submit: ChangeEventHandler<HTMLFormElement> = e => {
@@ -20,8 +19,7 @@ export default function LoginPage() {
         setUser({...loginuser, [e.target.name]: e.target.value});
         e.preventDefault();
     }
-    if(success && user?.name.length > 0)
-    return (<Navigate to='/' replace={true}/>);
+
     return (
         <div className={styles.contentWrapper}>
             <div>
