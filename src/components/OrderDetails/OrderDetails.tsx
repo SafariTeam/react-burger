@@ -2,7 +2,7 @@ import React from "react";
 import style from './OrderDetails.module.css';
 import { useSelector } from "react-redux";
 
-const orderData = state => state.order;
+const orderData = (state: any) => state.order;
 
 const OrderDetails = () => {
     const { orderNumber, isProcceed, isError } = useSelector(orderData);

@@ -1,3 +1,4 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import {
     FORGOT_PASSWORD,
     UPDATE_PROFILE_DATA,
@@ -9,12 +10,27 @@ import {
     LOGOUT_SUCCESS
 } from "../actions/profile";
 
+// type TState = {
+//     success: boolean;
+//     user?: TUser;
+//     message?: string;
+//     isError: boolean;
+//     isLoading: boolean;
+//     password?: string;
+// }
+
+// export type TUser = {
+//     email: string;
+//     password: string;
+//     name: string;
+// };
+
 const initialState = {
     success: false,
     user: null,
     message: '',
     isError: false,
-    isLoding: false,
+    isLoading: false,
     password: '',
 }
 
@@ -24,14 +40,14 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 success: false,
-                isLoding: true,
+                isLoading: true,
                 isError: false
             }
         }
         case PROFILE_SUCCESS : {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false
             }
         }
@@ -39,7 +55,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 success: false,
-                isLoding: false,
+                isLoading: false,
                 isError: true,
                 message: action.error
             }
@@ -47,7 +63,7 @@ export const profileReducer = (state = initialState, action) => {
         case REGISTER_SUCCESS : {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false,
                 user: action.user,
                 accessToken: action.accessToken,
@@ -59,7 +75,7 @@ export const profileReducer = (state = initialState, action) => {
         case FORGOT_PASSWORD: {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false,
                 success: action.success,
                 message: action.message
@@ -68,7 +84,7 @@ export const profileReducer = (state = initialState, action) => {
         case LOGIN_SUCCESS: {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false,
                 success: action.success,
                 user: action.user
@@ -77,7 +93,7 @@ export const profileReducer = (state = initialState, action) => {
         case UPDATE_PROFILE_DATA: {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false,
                 success: action.success,
                 user: action.user,
@@ -87,7 +103,7 @@ export const profileReducer = (state = initialState, action) => {
         case LOGOUT_SUCCESS: {
             return {
                 ...state,
-                isLoding: false,
+                isLoading: false,
                 isError: false,
                 success: action.success,
                 user: null

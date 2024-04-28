@@ -5,7 +5,7 @@ import { GetIngredientById } from "../../utils/helpers";
 
 const IngredientDetails = () => {
     const id = useParams();
-    const ingredient = GetIngredientById(id);
+    const ingredient = id.id !== undefined ? GetIngredientById(id.id): null;
     if(ingredient)
     return (
         <div className={`${style.contentWrap} mb-15`}>
@@ -33,6 +33,8 @@ const IngredientDetails = () => {
             </div>
         </div>
     )
+    else
+    return null;
 };
 
 export default IngredientDetails;

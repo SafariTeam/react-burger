@@ -11,22 +11,25 @@ import { CLEAR_ITEMS, addIngredient } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { useModal } from "../../services/hooks/useModal";
 import { useNavigate } from "react-router";
+import { TIngredient } from "../BurgerIngredients/Ingredient";
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
-    const { addedItems, bunItem } = useSelector(state => state.ingredients);
-    const { user } = useSelector(state => state.profile);
+    const { addedItems, bunItem } = useSelector((state: any) => state.ingredients);
+    const { user } = useSelector((state: any) => state.profile);
     const { toggleModal, openModal, closeModal } = useModal();
     const navigate = useNavigate();
 
-    function displayModal() {
+    function displayModal(): void {
         closeModal();
+        // @ts-ignore
         dispatch({type: CLEAR_ITEMS});
     }
 
     function createOrder() {
         if(user)
         {
+            // @ts-ignore
             dispatch(makeOrder([...addedItems,bunItem]));
             openModal();
         }
@@ -36,20 +39,20 @@ const BurgerConstructor = () => {
         }
     }
 
-    const card = useCallback((item,index) => {
+    const card = useCallback((item: TIngredient,index: number) => {
         return (
-            <ConstructorItem key={item.uid} item={{...item,dragIndex: index}} isDraggable={true} index={item.uid} dragIndex={index} />
+            <ConstructorItem key={item.uid} item={{...item, dragIndex: index}} isDraggable={true} index={item.uid} dragIndex={index} />
         )
     },[])
 
     const content = useMemo(
         () => {
-                return addedItems.map((item,index) => {return card(item,index)});
+                return addedItems.map((item: TIngredient,index: number) => {return card(item,index)});
         }, [addedItems]
     );
 
     const ttlPrice = useMemo(() => {
-        return addedItems.length > 0 || bunItem ? orderSum(addedItems, bunItem?.price, 'price') : 0;
+        return addedItems.length > 0 || bunItem ? orderSum((addedItems as TIngredient[]), (bunItem?.price as number)) : 0;
     },[addedItems,bunItem]); 
 
     const [{ isHover }, dropTarget] = useDrop({
@@ -57,7 +60,10 @@ const BurgerConstructor = () => {
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {dispatch(addIngredient({...item,uid: generateKey(item._id)}))}
+        drop(item) {
+            // @ts-ignore
+            dispatch(addIngredient({...item,uid: generateKey(item._id)}))
+        }
     });
 
     return (
