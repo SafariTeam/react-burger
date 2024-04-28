@@ -12,10 +12,10 @@ export default function AppHeader() {
                     <BurgerIcon type="primary"/>
                     <p className="pl-2">Конструктор</p>
                 </Link>
-                <a href="#" className={`${style.link} ml-2 pl-5 pr-5 text text_type_main-small`}>
+                <Link to="/feed" className={`${style.link} ml-2 pl-5 pr-5 text text_type_main-small`}>
                     <ListIcon type="secondary" />
                     <p className="pl-2">Лента заказов</p>
-                </a>
+                </Link>
             </nav>
             <Logo/>
             <Link to='/profile' className={`${location.pathname === '/login' || location.pathname === '/profile' ? style.active : style.link} pl-5 pr-5 text text_type_main-small`}>

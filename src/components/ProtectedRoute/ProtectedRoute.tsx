@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { RequestUser } from "../../services/actions/profile";
 import { FC, ReactElement, useEffect } from "react";
 import { getCookie } from "../../utils/cookies";
+import { useDispatch, useSelector } from "../../services/store";
 
 type TProtectedRoute = {
     children: ReactElement;
@@ -10,12 +10,11 @@ type TProtectedRoute = {
 }
 
 export const ProtectedRoute: FC<TProtectedRoute> = ( {children, authIsRequired} ) => {
-    const { user, isError } = useSelector((state: any) => state.profile);
+    const { user, isError } = useSelector(state => state.profile);
     const location = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(RequestUser());
     },[dispatch]);
     

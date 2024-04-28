@@ -1,10 +1,10 @@
 import React, { useRef, useCallback, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ConstructorItem.module.css";
-import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 import { DELETE_ITEM, MOVE_ITEM } from "../../services/actions/ingredients";
-import { XYCoord, useDrag, useDrop } from 'react-dnd'
+import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd';
+import type { Identifier, XYCoord } from 'dnd-core';
 import { TIngredient } from "../BurgerIngredients/Ingredient";
 
 type TCItem = {
@@ -13,21 +13,21 @@ type TCItem = {
   isLocked?: boolean;
   type?: "bottom" | "top" | undefined;
   index?: number;
-  dragIndex?: number; 
+  dragIndex: number; 
 };
 
 const ConstructorItem: FC<TCItem> = ({ item, isDraggable, isLocked, type, index, dragIndex }) => {
     const dispatch = useDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
-    const [{ handlerId }, drop] = useDrop({
+    const [{ handlerId }, drop] = useDrop<TCItem, void, { handlerId: Identifier | null }>({
         accept: 'aingredient',
         collect(monitor) {
           return {
             handlerId: monitor.getHandlerId(),
           }
         },
-        hover(itm: any, monitor) {
+        hover(itm: TCItem, monitor) {
             if (!ref.current) {
               return;
             }
@@ -58,7 +58,6 @@ const ConstructorItem: FC<TCItem> = ({ item, isDraggable, isLocked, type, index,
     });
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number, item: TIngredient) => {
-      // @ts-ignore
         dispatch({type: MOVE_ITEM, dragIndex: dragIndex, hoverIndex: hoverIndex, item: {...item,dragIndex}});
     }, [dispatch]);
 
@@ -67,13 +66,12 @@ const ConstructorItem: FC<TCItem> = ({ item, isDraggable, isLocked, type, index,
         item: () => {
           return { ...item }
         },
-        collect: (monitor) => ({
+        collect: (monitor: DragSourceMonitor) => ({
             opacity: monitor.isDragging() ? 0 : 1
         }),
     });
 
     const deleteItem = () => {
-        // @ts-ignore
         dispatch({type: DELETE_ITEM, item: {...item, index}});
     };
 

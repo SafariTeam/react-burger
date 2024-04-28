@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './Ingredient.module.css';
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
+import { useSelector } from "../../services/store";
 
 export type TIngredient = {
     _id: string;
@@ -35,7 +35,7 @@ const Ingredient: FC<TParams> = ({data}) => {
         navigate(`/ingredients/${id}`, {state: {previousLocation: location}});
     }
 
-    const { addedItems, bunItem } = useSelector((state: any) => state.ingredients);
+    const { addedItems, bunItem } = useSelector(state => state.ingredients);
 
     const countItems = addedItems.filter((item: TIngredient) => item._id === data._id).length;
     const countBuns = bunItem?._id === data._id ? 1 : 0;

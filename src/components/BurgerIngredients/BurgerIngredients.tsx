@@ -2,10 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './BurgerIngredients.module.css';
 import Ingredient, { TIngredient } from "./Ingredient";
-import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../../services/actions/ingredients";
-
-const getIngredients = (state: any) => state.ingredients.items;
+import { useDispatch, useSelector } from "../../services/store";
 
 const BurgerIngredients = () =>
 {
@@ -14,8 +12,8 @@ const BurgerIngredients = () =>
     const sauceRef = useRef<HTMLDivElement>(null);
     const fillingRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
-    const ingredients = useSelector(getIngredients);
-    const activeTab = useSelector((state: any) => state.ingredients.activeTab);
+    const ingredients = useSelector(state => state.ingredients.items);
+    const activeTab = useSelector(state => state.ingredients.activeTab);
 
     const pickTab = (value: string): void => {
         setScroll(value);

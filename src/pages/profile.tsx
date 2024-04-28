@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './page.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEventHandler, KeyboardEventHandler, useEffect, useState } from 'react';
 import { Logout, UpdateUser } from '../services/actions/profile';
 import { getCookie } from '../utils/cookies';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from '../services/store';
 
 //Тип будет помещен в редюсер
 type TUser = {
@@ -15,13 +15,13 @@ type TUser = {
 
 export default function ProfilePage () {
     const dispatch = useDispatch();
-    const {user} = useSelector((store: any) => store.profile);
+    const {user} = useSelector(store => store.profile);
     const [userData,setUserData] = useState<TUser>({name: '', email: '', password: ''});
     const [isEdit,setEdit] = useState(true);
     const [displayButtons,setDisplay] = useState(false);
 
     useEffect(()=> {
-        user && setUserData({...user, name: user.name, email: user.email, password: getCookie('password')});
+        user && setUserData({...user, name: user.name, email: user.email, password: getCookie('password') as string});
         
     },[]);
 
@@ -30,12 +30,11 @@ export default function ProfilePage () {
     }, [user, userData]);
 
     function submitData(): void {
-        // @ts-ignore
         dispatch(UpdateUser(userData));
     }
 
     function restoreData(): void {
-        setUserData({name: user.name, password: getCookie('password') as string, email: user.email});
+      user && setUserData({name: user.name, password: getCookie('password') as string, email: user.email});
     }
 
     const Submit: ChangeEventHandler<HTMLFormElement> = e => {
@@ -54,7 +53,6 @@ export default function ProfilePage () {
     }
 
     const setLogout = () => {
-        // @ts-ignore
         dispatch(Logout());
     }
 
@@ -77,7 +75,7 @@ export default function ProfilePage () {
                   </Link>
                 </li>
                 <li>
-                  <a href="#">История заказов</a>
+                  <Link to="/profile/orders">История заказов</Link>
                 </li>
                 <li>
                   <a href="#" onClick={setLogout}>

@@ -7,25 +7,21 @@ import {
     PROFILE_FAIL,
     REGISTER_SUCCESS,
     LOGIN_SUCCESS,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    TUser,
+    TProfileActions
 } from "../actions/profile";
 
-// type TState = {
-//     success: boolean;
-//     user?: TUser;
-//     message?: string;
-//     isError: boolean;
-//     isLoading: boolean;
-//     password?: string;
-// }
+export interface IUserStore {
+    success: boolean;
+    user?: TUser | null;
+    message?: string;
+    isError: boolean;
+    isLoading: boolean;
+    password?: string;
+};
 
-// export type TUser = {
-//     email: string;
-//     password: string;
-//     name: string;
-// };
-
-const initialState = {
+const initialState: IUserStore = {
     success: false,
     user: null,
     message: '',
@@ -34,20 +30,13 @@ const initialState = {
     password: '',
 }
 
-export const profileReducer = (state = initialState, action) => {
+export const profileReducer = (state = initialState, action: TProfileActions) => {
     switch(action.type) {
         case PROFILE_REQUEST: {
             return {
                 ...state,
                 success: false,
                 isLoading: true,
-                isError: false
-            }
-        }
-        case PROFILE_SUCCESS : {
-            return {
-                ...state,
-                isLoading: false,
                 isError: false
             }
         }
@@ -66,8 +55,6 @@ export const profileReducer = (state = initialState, action) => {
                 isLoading: false,
                 isError: false,
                 user: action.user,
-                accessToken: action.accessToken,
-                refreshToken: action.refreshToken,
                 success: action.success,
                 message: ''
             }

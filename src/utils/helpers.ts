@@ -1,16 +1,6 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
-import { Params } from "react-router";
 import { TIngredient } from "../components/BurgerIngredients/Ingredient";
-
-type TOrderSum = {
-    readonly items: TIngredient[];
-    bun: number;
-};
-
-interface IData {
-    id: string;
-}
+import { TOrdersFeed } from "../services/actions/feed";
+import { useSelector } from "../services/store";
 
 const orderSum = (items: TIngredient[], bun: number): number => {
     const bunCost = bun ? bun : 0;
@@ -23,9 +13,19 @@ const generateKey = (): number => {
     return new Date().getTime();
 }
 
-const GetIngredientById = (id: string) => {
-    const {items} = useSelector((state: any) => state.ingredients);
-    return items.find((item: TIngredient) => item._id === id);
+const GetIngredientById = (id: string): TIngredient => {
+    const {items} = useSelector(state => state.ingredients);
+    return items.find((item: TIngredient) => item._id === id) as TIngredient;
 }
 
-export {orderSum, generateKey, GetIngredientById};
+const GetOrderById = (id: string): TOrdersFeed => {
+    const {orders} = useSelector(state => state.feed);
+    return orders.find((item: TOrdersFeed) => item._id === id) as TOrdersFeed;
+}
+
+const GetOrderUserById = (id: string): TOrdersFeed => {
+    const {orders} = useSelector(state => state.profileFeed);
+    return orders.find((item: TOrdersFeed) => item._id === id) as TOrdersFeed;
+}
+
+export {orderSum, generateKey, GetIngredientById, GetOrderById, GetOrderUserById};

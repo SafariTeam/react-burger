@@ -1,3 +1,4 @@
+import { TIngredient } from '../../components/BurgerIngredients/Ingredient';
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -6,10 +7,20 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     MOVE_ITEM,
-    CLEAR_ITEMS
+    CLEAR_ITEMS,
+    TIngredientsActions
 } from '../actions/ingredients';
 
-const initialState = {
+export interface IngredientStore {
+    bunItem: TIngredient | null;
+    items: ReadonlyArray<TIngredient>;
+    itemsRequest: boolean;
+    itemsFailed: boolean;
+    addedItems: ReadonlyArray<TIngredient>;
+    activeTab: string;
+}
+
+const initialState: IngredientStore = {
     bunItem: null,
     items: [],
     itemsRequest: false,
@@ -18,7 +29,7 @@ const initialState = {
     activeTab: 'bun',
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
     switch(action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

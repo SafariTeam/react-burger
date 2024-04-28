@@ -5,32 +5,33 @@ import ConstructorItem from "./ConstructorItem";
 import Modal from "../Modal";
 import OrderDetails from "../OrderDetails";
 import {generateKey, orderSum} from '../../utils/helpers';
-import { useDispatch, useSelector } from "react-redux";
-import { useDrop } from "react-dnd";
+import { DropTargetMonitor, useDrop } from "react-dnd";
 import { CLEAR_ITEMS, addIngredient } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { useModal } from "../../services/hooks/useModal";
 import { useNavigate } from "react-router";
 import { TIngredient } from "../BurgerIngredients/Ingredient";
+import { useDispatch, useSelector } from "../../services/store";
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
-    const { addedItems, bunItem } = useSelector((state: any) => state.ingredients);
-    const { user } = useSelector((state: any) => state.profile);
+    const { addedItems, bunItem } = useSelector(state => state.ingredients);
+    const { user } = useSelector(state => state.profile);
     const { toggleModal, openModal, closeModal } = useModal();
     const navigate = useNavigate();
 
     function displayModal(): void {
         closeModal();
-        // @ts-ignore
         dispatch({type: CLEAR_ITEMS});
     }
 
     function createOrder() {
         if(user)
         {
-            // @ts-ignore
-            dispatch(makeOrder([...addedItems,bunItem]));
+            if(bunItem !== null)
+                dispatch(makeOrder([...addedItems,bunItem]));
+            else
+                dispatch(makeOrder([...addedItems]));
             openModal();
         }
         else
@@ -55,27 +56,29 @@ const BurgerConstructor = () => {
         return addedItems.length > 0 || bunItem ? orderSum((addedItems as TIngredient[]), (bunItem?.price as number)) : 0;
     },[addedItems,bunItem]); 
 
-    const [{ isHover }, dropTarget] = useDrop({
+    const [{ isHover }, dropTarget] = useDrop(() => ({
         accept: 'ingredient',
-        collect: monitor => ({
+        collect: (monitor: DropTargetMonitor) => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {
-            // @ts-ignore
-            dispatch(addIngredient({...item,uid: generateKey(item._id)}))
+        drop(item: TIngredient) {
+            dispatch(addIngredient({
+                ...item, uid: generateKey(),
+                index: 0
+            }));
         }
-    });
+    }));
 
     return (
         <div className={style.sideMenu + ' mt-25'}>
             <div className="ml-8 pl-6">
-                {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'top'} isLocked={true}/>}
+                {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'top'} isLocked={true} dragIndex={999}/>}
             </div>
             <div className={style.wrapData} ref={dropTarget}>
                 {content}
             </div>
             <div className="ml-8 pl-6">
-            {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'bottom'} isLocked={true}/>}
+            {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'bottom'} isLocked={true} dragIndex={999}/>}
             </div>
             <section className={`${style.orderProcceed} mt-7 mb-7`}>
                 <span className={`${style.price} m-1 text text_type_digits-default mr-10`}>

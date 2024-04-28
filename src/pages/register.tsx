@@ -1,9 +1,9 @@
 import styles from './page.module.css';
 import { Input, Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../services/actions/profile';
 import { ChangeEventHandler, useState } from 'react';
+import { useDispatch, useSelector } from '../services/store';
 
 //Тип будет помещен в редюсер
 type TUser = {
@@ -14,11 +14,10 @@ type TUser = {
 
 export default function RegisterPage () {
     const dispatch = useDispatch();
-    const { user, success, isError, message } = useSelector((state: any) => state.profile);
+    const { user, success, isError, message } = useSelector(state => state.profile);
     const [reguser, setUser] = useState<TUser>({email: '', password: '', name: ''});
 
     const Submit: ChangeEventHandler<HTMLFormElement> = e => {
-        // @ts-ignore
         dispatch(register(reguser));
         e.preventDefault();
     }

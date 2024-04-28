@@ -1,17 +1,25 @@
 import {
     MAKE_ORDER_REQUEST,
     MAKE_ORDER_SUCCESS,
-    MAKE_ORDER_FAILED 
+    MAKE_ORDER_FAILED, 
+    TOrderActions
 } from "../actions/order";
 
-const initialState = {
+export interface OrderStore {
+    orderNumber: number;
+    isProcceed: boolean;
+    isError: boolean;
+    error: string;
+}
+
+const initialState: OrderStore = {
     orderNumber: 0,
     isProcceed: false,
     isError: false,
-    error: undefined
+    error: ''
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
     switch(action.type) {
         case MAKE_ORDER_REQUEST: {
             return {

@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import AppHeader from '../AppHeader';
 import './App.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
-import { ForgotPassword, Ingredient, LoginPage, MainPage, NotFound, ProfilePage, RegisterPage, ResetPassword } from '../../pages';
+import { FeedInfo, ForgotPassword, Ingredient, LoginPage, MainPage, NotFound, OrdersPage, ProfilePage, RegisterPage, ResetPassword } from '../../pages';
 import ProtectedRoute from '../ProtectedRoute';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
 import IngredientDetails from '../IngredientDetails';
 import { RequestUser } from '../../services/actions/profile';
+import Feed from '../../pages/feed';
+import { useSelector, useDispatch } from '../../services/store';
+import FeedOrderDetailsModal from '../FeedOrderDetails/FeedOrderDetailsModal';
 
 function App() {
   const location = useLocation();
   const background = location.state?.previousLocation;
-  const isLoading = useSelector((state: any) => state.ingredients.itemsRequest);
-  const isFailed = useSelector((state: any) => state.itemsFailed);
+  const isLoading = useSelector(state => state.ingredients.itemsRequest);
+  const isFailed = useSelector(state => state.ingredients.itemsFailed);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,7 +25,6 @@ function App() {
   }
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getItems());
     // @ts-ignore
     dispatch(RequestUser());
@@ -40,7 +41,11 @@ function App() {
           <Route path='/forgot-password' element={<ProtectedRoute children={<ForgotPassword/>} authIsRequired={false}/>}/>
           <Route path='/reset-password' element={<ProtectedRoute children={<ResetPassword/>} authIsRequired={false}/>}/>
           <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} authIsRequired={true}/>}/>
+          <Route path='/profile/orders' element={<ProtectedRoute children={<OrdersPage/>} authIsRequired={true}/>}/>
+          <Route path='/profile/orders/:id' element={<ProtectedRoute children={<OrdersPage/>} authIsRequired={true}/>}/>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>
+          <Route path='/feed/' element={<Feed/>}/>
+          <Route path='/feed/:id' element={<FeedInfo/>}/>
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>
@@ -50,6 +55,14 @@ function App() {
             <Route path='/ingredients/:id' element=
             {<Modal onClose={displayModal} title={"Детали ингридиента"}>
                 <IngredientDetails/>
+            </Modal>}/>
+            <Route path='/feed/:id' element=
+            {<Modal onClose={displayModal} title={"Детали ингридиента"}>
+                <FeedOrderDetailsModal/>
+            </Modal>}/>
+            <Route path='/profile/orders/:id' element=
+            {<Modal onClose={displayModal} title={"Детали ингридиента"}>
+                <FeedOrderDetailsModal/>
             </Modal>}/>
           </Routes>
         )}

@@ -1,0 +1,60 @@
+.item {
+    background-color: #1C1C21;
+    border: 0px;
+    border-radius: 25px;
+    padding: 15px;
+    max-width: 500px;
+}
+
+.contentheader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredientswrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: start;
+}
+
+.ingredient {
+    display: flex;
+    justify-content: center;
+    border: 2px solid #4639bb;
+    border-radius: 50em;
+    margin-right: -20px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    align-items: center;
+    background-color: black;
+    background-position: center;
+    background-size: cover;
+}
+
+.ingredient:first {
+    margin-left: 0%;
+}
+
+.contentdata {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.inProgress {
+    color: #02b0b1;
+}
+
+.canceled {
+    color: red;
+}
+
+.statusHide {
+    display: none;
+}

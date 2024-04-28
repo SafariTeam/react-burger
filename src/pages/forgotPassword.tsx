@@ -1,17 +1,16 @@
 import styles from './page.module.css';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEventHandler, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { RestorePassword } from '../services/actions/profile';
+import { useDispatch, useSelector } from '../services/store';
 
 export default function ForgotPassword() {
     const dispatch = useDispatch();
-    const {message} = useSelector((store: any) => store.profile);
+    const {message} = useSelector(store => store.profile);
     const [email,setEmail] = useState<string>('');
 
     const Submit: ChangeEventHandler<HTMLFormElement> = e => {
-        // @ts-ignore
         dispatch(RestorePassword(email));
         e.preventDefault();
     }
