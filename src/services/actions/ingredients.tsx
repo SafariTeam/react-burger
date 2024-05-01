@@ -108,7 +108,7 @@ type TIngredientsRequest = {
   data: ReadonlyArray<TIngredient>;
 }
 
-export const getItems = (): any => (dispatch: any) => {
+export const getItems = () => (dispatch: any) => {
   dispatch(getIngredientsAction());
   request<TIngredientsRequest>('ingredients')
     .then(res => {
@@ -119,15 +119,15 @@ export const getItems = (): any => (dispatch: any) => {
     })
 }
 
-export const setActiveTab = (tab: string): any => (dispatch: any) => {
+export const setActiveTab = (tab: string) => (dispatch: any) => {
   dispatch(setActiveTabAction(tab));
 };
 
-export const addIngredient = (ingredient: IIngredient): any => (dispatch: any) => {
+export const addIngredient = (ingredient: IIngredient) => (dispatch: any) => {
   dispatch(addIngredientAction(ingredient));
 };
 
-export const removeIngredient = (ingredient: IIngredient): any => (dispatch: any) => {
+export const removeIngredient = (ingredient: IIngredient) => (dispatch: any) => {
   dispatch(removeIngredientAction(ingredient));
 };
 

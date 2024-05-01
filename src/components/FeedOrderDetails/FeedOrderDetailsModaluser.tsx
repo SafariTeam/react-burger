@@ -2,29 +2,16 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import style from "./FeedOrderDetails.module.css"
 import { TIngredient } from "../BurgerIngredients/Ingredient";
 import { GetIngredientById, GetOrderById, orderSum } from "../../utils/helpers";
-import { useLocation, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "../../services/store";
-import { getCookie } from "../../utils/cookies";
-import { useEffect } from "react";
-import { WSCloseUser, WSStartUser } from "../../services/actions/feedUser";
+import { useParams } from "react-router-dom";
+import { useSelector } from "../../services/store";
 
-const FeedOrderDetails = () => {
+const FeedOrderDetailsModalUser = () => {
     const {id} = useParams();
-    const accessToken = getCookie('authToken') as string;
-    const token = accessToken.split('Bearer ')[1];
-    const dispatch = useDispatch();
-    const location = useLocation();
-    useEffect(() => {
-      console.log(token);
-        if(location.pathname.startsWith('/profile/'))
-            dispatch(WSStartUser(token));
-        else
-            return () => {dispatch(WSCloseUser());}
-    },[location.pathname,dispatch]);
     const {items} = useSelector(store => store.ingredients);
-    const {orders} = useSelector(store => store.feed);
-    const userOrders = useSelector(store => store.profileFeed.orders);
-    const order = id !== undefined && location.pathname.startsWith('/feed/') ? GetOrderById(id,orders): id !== undefined ? GetOrderById(id,userOrders) : null;
+    const {orders} = useSelector(store => store.profileFeed);
+    if(!items)
+        return null;
+    const order = id !== undefined ? GetOrderById(id, orders): null;
     const getDate = () => {
         return <FormattedDate date={new Date(order?.createdAt as string)} />
     }
@@ -58,7 +45,7 @@ const FeedOrderDetails = () => {
 
     const getUniqueIngredients = () => {
         let ingredients = order?.ingredients.map(x => GetIngredientById(x,items)) as TIngredient[];
-        let uniqueItems = ingredients.filter((value: TIngredient, index: number, self: readonly TIngredient[]) => {
+        let uniqueItems = ingredients?.filter((value: TIngredient, index: number, self: readonly TIngredient[]) => {
             return self.indexOf(value) === index;
         });
         return uniqueItems;
@@ -73,13 +60,13 @@ const FeedOrderDetails = () => {
     const sum = orderSum(order?.ingredients.map(x => GetIngredientById(x,items)) as TIngredient[],0);
     
     return (
-        <div className={style.orderData}>
-            <span className="text text_type_digits-default mb-10">{`#${order?.number}`}</span>
+        <div className={style.orderDataModal}>
+            <p className="text text_type_digits-default mb-10">{`#${order?.number}`}</p>
             <p className="text text text_type_main-medium mb-2">{`${order?.name} бургер`}</p>
             <p className={`${statusStyle()} text text_type_main-small mb-10`}>{orderStatus()}</p>
             <p className="text text text_type_main-medium">Состав:</p>
-            <div className={style.contentdata}>
-                    {getUniqueIngredients().map((x,index) => {return <div className={style.ingredient}>
+            <div className={style.contentdataModal}>
+                    {getUniqueIngredients()?.map((x,index) => {return <div className={style.ingredient} key={x._id}>
                         <div className={style.ingredientData}>
                             <div className={style.ingredientImage} style={getStyle(index,x.image_mobile)}></div>
                             <span className="text text_type_main-small">{x.name}</span>
@@ -101,4 +88,4 @@ const FeedOrderDetails = () => {
     )
 };
 
-export default FeedOrderDetails;
+export default FeedOrderDetailsModalUser;

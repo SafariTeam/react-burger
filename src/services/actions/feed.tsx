@@ -1,10 +1,13 @@
-import { url_web_feed, url_web_orders } from "../../api/api";
+import { request, url_web_feed, url_web_orders } from "../../api/api";
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
+export const ORDER_REQUEST: 'ORDER_REQUEST' = 'ORDER_REQUEST';
+export const ORDER_SUCCESS: 'ORDER_SUCCESS' = 'ORDER_SUCCESS';
+export const ORDER_ERROR: 'ORDER_ERROR' = 'ORDER_ERROR';
 
 export type TOrdersFeed = {
     ingredients: string[];
@@ -15,6 +18,11 @@ export type TOrdersFeed = {
     _id: string;
     price: number;
     updatedAt: string;
+}
+
+export type TOrderData = {
+    success: boolean;
+    orders: TOrdersFeed[];
 }
 
 export interface IWSFeedConnectAction {
@@ -34,6 +42,14 @@ export interface IWSFeedConnectErrorAction {
 
 export interface IWSFeedConnectClosedAction {
     type: typeof WS_CONNECTION_CLOSED;
+};
+
+export interface IOrderRequestStartAction {
+    type: typeof ORDER_REQUEST;
+};
+
+export interface IOrederRequestErrorAction {
+    type: typeof ORDER_ERROR;
 };
 
 export interface IWSFeedGetMessageAction {
@@ -57,7 +73,10 @@ export type TWSFeedActions =
 | IWSFeedConnectSuccessAction 
 | IWSFeedConnectErrorAction 
 | IWSFeedConnectClosedAction 
-| IWSFeedGetMessageAction;
+| IWSFeedGetMessageAction
+| IOrderRequestStartAction
+| IOrederRequestErrorAction
+| IFeedDataSuccess;
 
 export const WSOrdersFeedRootActions: TWSFeedRootActions = {
     wsInit: WS_CONNECTION_START,
@@ -66,6 +85,18 @@ export const WSOrdersFeedRootActions: TWSFeedRootActions = {
     onError: WS_CONNECTION_ERROR,
     onMessage: WS_GET_MESSAGE
 };
+
+export interface IFeedDataSuccess {
+    readonly type: typeof ORDER_SUCCESS;
+    readonly success: boolean;
+    readonly payload: TOrdersFeed[];
+}
+
+export const feedInfoData = (success: boolean, payload: TOrdersFeed[]): IFeedDataSuccess => ({
+    type: ORDER_SUCCESS,
+    success,
+    payload
+});
 
 export const wsMessageAction = (orders: TOrdersFeed[], total: number, totalToday: number): IWSFeedGetMessageAction => ({
     type: WS_GET_MESSAGE,
@@ -79,7 +110,7 @@ export const WSErrorAction = (error: Event): IWSFeedConnectErrorAction => ({
     error
 });
 
-export const WSStart = (): any => ({
+export const WSStart = () => ({
     type: WS_CONNECTION_START,
     payload: url_web_feed,
 });
@@ -88,10 +119,22 @@ export const WSClose = (): IWSFeedConnectClosedAction => ({
     type: WS_CONNECTION_CLOSED
 });
 
-export const WSMessage = (orders: TOrdersFeed[], total: number, totalToday: number): any => (dispatch: any) => {
-    dispatch(wsMessageAction(orders, total, totalToday));
-};
-
-export const WSError = (error: Event): any => (dispatch: any) => {
-    dispatch(WSErrorAction(error));
-};
+export const getFeedInfoData = (id: string) => (dispatch: any) => {
+    const data = {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    };
+    dispatch({
+      type: ORDER_REQUEST
+    });
+    request<TOrderData>(`orders/${id}`,data)
+    .then(res => {
+        console.log(id, res);
+      dispatch(feedInfoData(res.success,res.orders))
+    })
+    .catch(error => {
+      dispatch({type: ORDER_ERROR});
+    })
+  }

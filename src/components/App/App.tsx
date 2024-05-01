@@ -11,6 +11,8 @@ import { RequestUser } from '../../services/actions/profile';
 import Feed from '../../pages/feed';
 import { useSelector, useDispatch } from '../../services/store';
 import FeedOrderDetailsModal from '../FeedOrderDetails/FeedOrderDetailsModal';
+import FeedOrderDetailsModalUser from '../FeedOrderDetails/FeedOrderDetailsModaluser';
+import FeedInfoUser from '../../pages/feedInfoUser';
 
 function App() {
   const location = useLocation();
@@ -42,7 +44,7 @@ function App() {
           <Route path='/reset-password' element={<ProtectedRoute children={<ResetPassword/>} authIsRequired={false}/>}/>
           <Route path='/profile' element={<ProtectedRoute children={<ProfilePage/>} authIsRequired={true}/>}/>
           <Route path='/profile/orders' element={<ProtectedRoute children={<OrdersPage/>} authIsRequired={true}/>}/>
-          <Route path='/profile/orders/:id' element={<ProtectedRoute children={<OrdersPage/>} authIsRequired={true}/>}/>
+          <Route path='/profile/orders/:id' element={<ProtectedRoute children={<FeedInfoUser/>} authIsRequired={true}/>}/>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>
           <Route path='/feed/' element={<Feed/>}/>
           <Route path='/feed/:id' element={<FeedInfo/>}/>
@@ -57,12 +59,12 @@ function App() {
                 <IngredientDetails/>
             </Modal>}/>
             <Route path='/feed/:id' element=
-            {<Modal onClose={displayModal} title={"Детали ингридиента"}>
+            {<Modal onClose={displayModal}>
                 <FeedOrderDetailsModal/>
             </Modal>}/>
             <Route path='/profile/orders/:id' element=
-            {<Modal onClose={displayModal} title={"Детали ингридиента"}>
-                <FeedOrderDetailsModal/>
+            {<Modal onClose={displayModal}>
+                <FeedOrderDetailsModalUser/>
             </Modal>}/>
           </Routes>
         )}

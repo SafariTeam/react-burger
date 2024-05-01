@@ -104,7 +104,7 @@ export type TProfileActions =
 | ILoginSuccess
 | ILogoutSuccess;
 
-interface IUserRequest extends IResponse {
+export interface IUserRequest extends IResponse {
   accessToken: string;
   refreshToken: string;
   user: TUser;
@@ -115,7 +115,7 @@ interface IResponse {
   message: string;
 }
 
-export const register = (user: TUser): any => (dispatch: any) => {
+export const register = (user: TUser) => (dispatch: any) => {
     const body = {email: user.email, password: user.password, name: user.name};
     const data = {
       method: "POST",
@@ -143,7 +143,7 @@ export const register = (user: TUser): any => (dispatch: any) => {
     })
 }
 
-export const RestorePassword = (email: string): any => (dispatch: any) => {
+export const RestorePassword = (email: string) => (dispatch: any) => {
     const body = {email: email};
     const data = {
       method: "POST",
@@ -162,7 +162,7 @@ export const RestorePassword = (email: string): any => (dispatch: any) => {
     })
 }
 
-export const UpdatePassword = (restorationData: {password: string, token: string}): any => (dispatch: any) => {
+export const UpdatePassword = (restorationData: {password: string, token: string}) => (dispatch: any) => {
     const body = {password: restorationData.password, token: restorationData.token};
     const data = {
       method: "POST",
@@ -182,7 +182,7 @@ export const UpdatePassword = (restorationData: {password: string, token: string
     })
 }
 
-export const Logout = (): any => (dispatch: any) => {
+export const Logout = () => (dispatch: any) => {
     const body = {token: localStorage.getItem('refreshToken')};
     const data = {
       method: "POST",
@@ -203,7 +203,7 @@ export const Logout = (): any => (dispatch: any) => {
     })
 }
 
-export const AuthUser = (userdata: TUser): any => (dispatch: any) => {
+export const AuthUser = (userdata: TUser) => (dispatch: any) => {
     const body = {email: userdata.email, password: userdata.password};
     const data = {
       method: "POST",
@@ -230,7 +230,7 @@ export const AuthUser = (userdata: TUser): any => (dispatch: any) => {
     })
 }
 
-export const RequestUser = (): any => (dispatch: any) => {
+export const RequestUser = () => (dispatch: any) => {
     UpdateToken();
     const token = localStorage.getItem('refreshToken');
     if(!token)
@@ -251,7 +251,7 @@ export const RequestUser = (): any => (dispatch: any) => {
     })
 }
 
-export const UpdateUser = (user: TUser): any => (dispatch: any) => {
+export const UpdateUser = (user: TUser) => (dispatch: any) => {
     UpdateToken();
     const body = {...user};
     const data = {
@@ -271,6 +271,7 @@ export const UpdateUser = (user: TUser): any => (dispatch: any) => {
     .catch(error => {
         dispatch(profileFaildeAction(error));
         //UpdateToken();
+        //UpdateUser(user);
     })
 }
 
@@ -299,5 +300,6 @@ const UpdateToken = (): void => {
         RequestUser();
     })
     .catch(error => {
+      console.log(error);
     });
 }

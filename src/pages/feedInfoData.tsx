@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import FeedOrderDetails from '../components/FeedOrderDetails';
-import styles from './page.module.css';
 import { useDispatch, useSelector } from '../services/store';
 import { useEffect } from 'react';
 import { WSClose, WSStart } from '../services/actions/feed';

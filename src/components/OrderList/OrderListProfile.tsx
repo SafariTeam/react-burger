@@ -15,7 +15,7 @@ const OrderListProfile = () => {
 
     const content = useMemo(
         () => {
-                return orders.map((item: TOrdersFeed, index: number) => {return card(item,index)});
+                return orders.map((item: TOrdersFeed, index: number) => {return card(item,index)}).reverse();
         }, [orders,card]
     );
     

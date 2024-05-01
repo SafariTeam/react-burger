@@ -16,7 +16,6 @@ export default function OrdersPage () {
     }
     const location = useLocation();
     useEffect(() => {
-      console.log(token);
         if(location.pathname.startsWith('/profile/'))
             dispatch(WSStartUser(token));
         else
@@ -25,7 +24,7 @@ export default function OrdersPage () {
     return (
         <div className={styles.contentWrapper}>
           <div className={styles.ProfileWrapper}>
-            <div className={`${styles.navigation} mr-15`}>
+            <div className={`${styles.navigationa} mr-15`}>
               <ul className="text text_type_main-medium">
                 <li>
                   <Link to="/profile">
@@ -45,7 +44,7 @@ export default function OrdersPage () {
                 В этом разделе вы можете изменить свои персональные данные
               </span>
             </div>
-            <div className={styles.profileWrapper}>
+            <div className={styles.maxWrap}>
               <OrderListProfile/>
             </div>
           </div>

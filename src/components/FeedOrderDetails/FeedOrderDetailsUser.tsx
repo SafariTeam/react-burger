@@ -3,10 +3,13 @@ import style from "./FeedOrderDetails.module.css"
 import { TIngredient } from "../BurgerIngredients/Ingredient";
 import { GetIngredientById, GetOrderUserById, orderSum } from "../../utils/helpers";
 import { useParams } from "react-router-dom";
+import { useSelector } from "../../services/store";
 
 const FeedOrderDetailsUser = () => {
-    const id = useParams();
-    const order = id.id !== undefined ? GetOrderUserById(id.id): null;
+    const {id} = useParams();
+    const {orders} = useSelector(store => store.profileFeed);
+    const {items} = useSelector(store => store.ingredients);
+    const order = id !== undefined ? GetOrderUserById(id,orders): null;
     const getDate = () => {
         return <FormattedDate date={new Date(order?.createdAt as string)} />
     }
@@ -39,7 +42,7 @@ const FeedOrderDetailsUser = () => {
     };
 
     const getUniqueIngredients = () => {
-        let ingredients = order?.ingredients.map(x => GetIngredientById(x)) as TIngredient[];
+        let ingredients = order?.ingredients.map(x => GetIngredientById(x,items)) as TIngredient[];
         let uniqueItems = ingredients.filter((value: TIngredient, index: number, self: readonly TIngredient[]) => {
             return self.indexOf(value) === index;
         });
@@ -47,12 +50,12 @@ const FeedOrderDetailsUser = () => {
     };
 
     const itemsNumbers = (item: TIngredient): number | undefined => {
-        let ingredients = order?.ingredients.map(x => GetIngredientById(x)) as TIngredient[];
+        let ingredients = order?.ingredients.map(x => GetIngredientById(x,items)) as TIngredient[];
         const count = ingredients.filter(itm => itm._id === item._id).length;
         return count;
     };
 
-    const sum = orderSum(order?.ingredients.map(x => GetIngredientById(x)) as TIngredient[],0);
+    const sum = orderSum(order?.ingredients.map(x => GetIngredientById(x,items)) as TIngredient[],0);
     
     return (
         <div className={style.orderData}>

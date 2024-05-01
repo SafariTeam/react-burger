@@ -2,10 +2,12 @@ import React from "react";
 import style from './IngredientDetails.module.css';
 import { useParams } from "react-router";
 import { GetIngredientById } from "../../utils/helpers";
+import { useSelector } from "../../services/store";
 
 const IngredientDetails = () => {
     const id = useParams();
-    const ingredient = id.id !== undefined ? GetIngredientById(id.id): null;
+    const {items} = useSelector(store => store.ingredients);
+    const ingredient = id.id !== undefined ? GetIngredientById(id.id,items): null;
     if(ingredient)
     return (
         <div className={`${style.contentWrap} mb-15`}>

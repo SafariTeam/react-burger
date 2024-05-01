@@ -21,7 +21,8 @@ export default function ProfilePage () {
     const [displayButtons,setDisplay] = useState(false);
 
     useEffect(()=> {
-        user && setUserData({...user, name: user.name, email: user.email, password: getCookie('password') as string});
+        const pwd = getCookie('password');
+        user && setUserData({...user, name: user.name, email: user.email, password: pwd !== undefined ? pwd : ''});
         
     },[]);
 

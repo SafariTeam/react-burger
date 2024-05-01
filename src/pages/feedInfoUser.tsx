@@ -3,9 +3,10 @@ import FeedOrderDetailsUser from '../components/FeedOrderDetails';
 import { useDispatch, useSelector } from '../services/store';
 import { useEffect } from 'react';
 import { WSCloseUser, WSStartUser } from '../services/actions/feedUser';
+import { getCookie } from '../utils/cookies';
 
 export default function FeedInfoUser() {
-    const accessToken = localStorage.getItem("authToken") as string;
+    const accessToken = getCookie("authToken") as string;
     const token = accessToken.split('Bearer ')[1];
     const location = useLocation();
     const dispatch = useDispatch();

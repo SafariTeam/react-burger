@@ -5,6 +5,7 @@ import { TIngredient } from "../BurgerIngredients/Ingredient";
 import { GetIngredientById, orderSum } from "../../utils/helpers";
 import { TOrdersFeed } from "../../middleware/socketMiddleware";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "../../services/store";
 
 export type TOrderItemData = {
     orderData: TOrdersFeed;
@@ -15,6 +16,7 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = _id;
+    const {items} = useSelector(store => store.ingredients);
     function displayModal() {
         navigate(`/feed/${id}`, {state: {previousLocation: location}});
     }
@@ -50,10 +52,10 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
         }
     };
 
-    const sum = orderSum(ingredients.map(x => GetIngredientById(x)),0);
+    const sum = orderSum(ingredients.map(x => GetIngredientById(x,items)),0);
 
     const getUniqueIngredients = (ingredientsIds: readonly string[]): TIngredient[] => {
-        let ingredients = ingredientsIds.map(x => GetIngredientById(x));
+        let ingredients = ingredientsIds.map(x => GetIngredientById(x,items));
         let uniqueItems = ingredients.filter((value: TIngredient, index: number, self: readonly TIngredient[]) => {
             return self.indexOf(value) === index;
         });

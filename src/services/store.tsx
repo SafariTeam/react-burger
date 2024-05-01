@@ -21,7 +21,7 @@ export type TAppActions = TIngredientsActions | TOrderActions | TProfileActions 
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;
 
-type AppDispatch<ReturnType = void> = (action: TAppActions | AppThunk) => ReturnType;
+export type AppDispatch<ReturnType = void> = (action: TAppActions | AppThunk) => ReturnType;
 
 export const useDispatch: () => AppDispatch = dispatchHook;
 

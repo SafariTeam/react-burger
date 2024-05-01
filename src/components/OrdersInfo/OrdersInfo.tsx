@@ -27,7 +27,7 @@ const OrdersInfo: FC<TFeedInfo> = (props) => {
 
   const pending = useCallback((item: TOrdersFeed) => {
     return (
-      <p className={`${style.done} text text_type_digits-default`}>
+      <p className={`${style.done} text text_type_digits-default`} key={item._id}>
         {item.number}
       </p>
     );

@@ -1,7 +1,7 @@
 import type { Middleware, MiddlewareAPI } from 'redux'; 
 import { TAppActions, TRootState } from '../services/store';
 import { url } from '../api/api';
-import { TWSFeedRootActions, WSError } from '../services/actions/feed';
+import { TWSFeedRootActions } from '../services/actions/feed';
 import { TWSFeedRootActionsUser } from '../services/actions/feedUser';
 import { setCookie } from '../utils/cookies';
 
