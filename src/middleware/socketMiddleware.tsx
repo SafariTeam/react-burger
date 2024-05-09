@@ -1,4 +1,4 @@
-import type { Middleware, MiddlewareAPI } from 'redux'; 
+import type { Middleware, MiddlewareAPI } from 'redux';
 import { TAppActions, TRootState } from '../services/store';
 import { url } from '../api/api';
 import { TWSFeedRootActions } from '../services/actions/feed';
@@ -10,7 +10,7 @@ export type TOrdersFeed = {
   number: number;
   name: string;
   status: string;
-  createdAt: string 
+  createdAt: string
   _id: string;
   price: number;
   updatedAt: string;
@@ -37,12 +37,12 @@ const updateToken = async (): Promise<{ success: boolean, accessToken?: string }
       if (res.accessToken) {
         let authToken;
         if (res.accessToken.indexOf('Bearer') === 0) {
-            authToken = res.accessToken;
+          authToken = res.accessToken;
         }
         if (authToken) {
-            setCookie('authToken', authToken);
+          setCookie('authToken', authToken);
         }
-        localStorage.setItem('refreshToken',res.refreshToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
       }
       return { success: true, accessToken: res.accessToken };
     } else {
@@ -54,7 +54,7 @@ const updateToken = async (): Promise<{ success: boolean, accessToken?: string }
 };
 
 export const socketMiddleware = (wsActions: TWSFeedRootActions | TWSFeedRootActionsUser, wsApiURL: string): Middleware<{}, TRootState> => {
-  return (store: MiddlewareAPI) => { 
+  return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
 
     const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
@@ -79,7 +79,7 @@ export const socketMiddleware = (wsActions: TWSFeedRootActions | TWSFeedRootActi
           if (orderData.message === "Invalid or missing token") {
             const tokenResponse = await updateToken();
             if (tokenResponse.success) {
-              const newSocketUrl = `${wsApiURL}`; 
+              const newSocketUrl = `${wsApiURL}`;
               socket = new WebSocket(newSocketUrl);
               dispatch({ type: wsInit, payload: newSocketUrl });
             }
@@ -107,7 +107,7 @@ export const socketMiddleware = (wsActions: TWSFeedRootActions | TWSFeedRootActi
           dispatch({ type: onError, payload: event });
         }
 
-        if(type === onError) {
+        if (type === onError) {
           socket.close();
         }
       }

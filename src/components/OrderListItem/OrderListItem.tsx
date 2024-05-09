@@ -16,28 +16,28 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = _id;
-    const {items} = useSelector(store => store.ingredients);
+    const { items } = useSelector(store => store.ingredients);
     function displayModal() {
-        navigate(`/feed/${id}`, {state: {previousLocation: location}});
+        navigate(`/feed/${id}`, { state: { previousLocation: location } });
     }
 
     const statusStyle = (status: string | undefined) => {
-        if(status === undefined)
+        if (status === undefined)
             return style.statusHide;
-        
+
         return status === "pending" ? style.inProgress : status === "canceled" ? style.canceled : null;
     }
 
     const orderStatus = (status: string): string => {
         switch (status) {
-        case "done":
-            return 'Выполнен';
-        case "pending":
-            return "В работе";
-        case 'created':
-            return "Создан";
-        default:
-            return "";
+            case "done":
+                return 'Выполнен';
+            case "pending":
+                return "В работе";
+            case 'created':
+                return "Создан";
+            default:
+                return "";
         }
     }
 
@@ -48,14 +48,14 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
     const getStyle = (index: number, image: string): React.CSSProperties => {
         return {
             backgroundImage: "url('" + image + "')",
-            zIndex: 1000-index
+            zIndex: 1000 - index
         }
     };
 
-    const sum = orderSum(ingredients.map(x => GetIngredientById(x,items)),0);
+    const sum = orderSum(ingredients.map(x => GetIngredientById(x, items)), 0);
 
     const getUniqueIngredients = (ingredientsIds: readonly string[]): TIngredient[] => {
-        let ingredients = ingredientsIds.map(x => GetIngredientById(x,items));
+        let ingredients = ingredientsIds.map(x => GetIngredientById(x, items));
         let uniqueItems = ingredients.filter((value: TIngredient, index: number, self: readonly TIngredient[]) => {
             return self.indexOf(value) === index;
         });
@@ -72,17 +72,18 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
             <p className={`${statusStyle(status)} text text_type_main-small mb-5`}>{orderStatus(status)}</p>
             <div className={style.contentdata}>
                 <div className={style.ingredientswrap}>
-                    {getUniqueIngredients(ingredients).map((x,index) => {
-                        if(index < 5) 
-                            return <div className={style.ingredient} style={getStyle(index,x.image_mobile)} key={x._id}></div>; 
-                        else if(index === 5) { 
-                            const count = ingredients.length - index; 
-                            return <div className={style.ingredient} style={getStyle(index,x.image_mobile)} key={x._id}>
-                                        <span className="text text_type_main-small pl-2">{`+${count}`}</span>
-                                   </div>}
+                    {getUniqueIngredients(ingredients).map((x, index) => {
+                        if (index < 5)
+                            return <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}></div>;
+                        else if (index === 5) {
+                            const count = ingredients.length - index;
+                            return <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}>
+                                <span className="text text_type_main-small pl-2">{`+${count}`}</span>
+                            </div>
+                        }
                         else
                             return null;
-                        })
+                    })
                     }
                 </div>
                 <span className="m-1 text text_type_digits-default">

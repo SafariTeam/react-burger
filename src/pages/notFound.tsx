@@ -1,9 +1,9 @@
 import styles from './page.module.css';
 import { Link } from 'react-router-dom';
 
-export default function NotFound () {
-    const text = ['Я ошибся. Могу я один раз ошибиться?','Вот как мне с этим жить?','Я, конечно, прихерел...','Ну это пи**ец какой-то, ну сколько можно?'];
-    
+export default function NotFound() {
+    const text = ['Я ошибся. Могу я один раз ошибиться?', 'Вот как мне с этим жить?', 'Я, конечно, прихерел...', 'Ну это пи**ец какой-то, ну сколько можно?'];
+
     return (
         <div className={styles.contentWrapper}>
             <div>

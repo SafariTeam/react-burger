@@ -27,12 +27,12 @@ type TParams = {
     data: TIngredient;
 };
 
-const Ingredient: FC<TParams> = ({data}) => {
+const Ingredient: FC<TParams> = ({ data }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = data._id;
     function displayModal() {
-        navigate(`/ingredients/${id}`, {state: {previousLocation: location}});
+        navigate(`/ingredients/${id}`, { state: { previousLocation: location } });
     }
 
     const { addedItems, bunItem } = useSelector(state => state.ingredients);
@@ -45,20 +45,20 @@ const Ingredient: FC<TParams> = ({data}) => {
         type: 'ingredient',
         item: data,
         collect: monitor => ({
-          opacity: monitor.isDragging() ? 0.5 : 1
+            opacity: monitor.isDragging() ? 0.5 : 1
         })
-      });
-    
+    });
+
     return (
         <>
             <div className={style.burgerdata + ' mr-6 mb-8'} onClick={displayModal} ref={ref} style={{ opacity }}>
-                {count > 0 && <Counter size="small" count={count}/>}
-                <img src={data.image} alt={data.name}/>
+                {count > 0 && <Counter size="small" count={count} />}
+                <img src={data.image} alt={data.name} />
                 <span className={'m-1 text text_type_digits-default'}>
                     <span className="pr-3">{data.price}</span>
                     <CurrencyIcon type="primary" />
                 </span>
-                <span style={{textAlign: 'center'}}>{data.name}</span>
+                <span style={{ textAlign: 'center' }}>{data.name}</span>
             </div>
         </>
     )

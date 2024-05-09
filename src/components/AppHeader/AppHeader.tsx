@@ -8,8 +8,8 @@ export default function AppHeader() {
     return (
         <header className={`${style.root} p-4`}>
             <nav>
-               <Link to='/' className={`${location.pathname === '/' ? style.active : style.link} ml-2 pl-5 pr-5 text text_type_main-small`}>
-                    <BurgerIcon type="primary"/>
+                <Link to='/' className={`${location.pathname === '/' ? style.active : style.link} ml-2 pl-5 pr-5 text text_type_main-small`}>
+                    <BurgerIcon type="primary" />
                     <p className="pl-2">Конструктор</p>
                 </Link>
                 <Link to="/feed" className={`${style.link} ml-2 pl-5 pr-5 text text_type_main-small`}>
@@ -17,9 +17,9 @@ export default function AppHeader() {
                     <p className="pl-2">Лента заказов</p>
                 </Link>
             </nav>
-            <Logo/>
+            <Logo />
             <Link to='/profile' className={`${location.pathname === '/login' || location.pathname === '/profile' ? style.active : style.link} pl-5 pr-5 text text_type_main-small`}>
-                <ProfileIcon type="secondary"/>
+                <ProfileIcon type="secondary" />
                 <p className="pl-2">Личный кабинет</p>
             </Link>
         </header>

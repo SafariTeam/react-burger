@@ -11,7 +11,7 @@ export type TOrdersFeed = {
     number: number;
     name: string;
     status: string;
-    createdAt: string 
+    createdAt: string
     _id: string;
     price: number;
     updatedAt: string;
@@ -21,7 +21,7 @@ export interface IWSFeedConnectActionUser {
     type: typeof WS_CONNECTION_START_USER;
     payload: string;
 };
-  
+
 export interface IWSFeedConnectSuccessActionUser {
     type: typeof WS_CONNECTION_SUCCESS_USER;
     payload: Event;
@@ -52,12 +52,12 @@ export type TWSFeedRootActionsUser = {
     onMessage: typeof WS_GET_MESSAGE_USER,
 };
 
-export type TWSFeedActionsUser = 
-| IWSFeedConnectActionUser
-| IWSFeedConnectSuccessActionUser
-| IWSFeedConnectErrorActionUser
-| IWSFeedConnectClosedActionUser
-| IWSFeedGetMessageActionUser;
+export type TWSFeedActionsUser =
+    | IWSFeedConnectActionUser
+    | IWSFeedConnectSuccessActionUser
+    | IWSFeedConnectErrorActionUser
+    | IWSFeedConnectClosedActionUser
+    | IWSFeedGetMessageActionUser;
 
 export const WSOrdersFeedRootActionsUser: TWSFeedRootActionsUser = {
     wsInit: WS_CONNECTION_START_USER,
@@ -77,8 +77,8 @@ export const wsMessageActionUser = (orders: TOrdersFeed[], total: number, totalT
 export const WSStartUser = (token: string): IWSFeedConnectActionUser => ({
     type: WS_CONNECTION_START_USER,
     payload: `${url_web_orders}?token=${token}`
-  });
+});
 
-export const WSCloseUser = ():IWSFeedConnectClosedActionUser => ({
+export const WSCloseUser = (): IWSFeedConnectClosedActionUser => ({
     type: WS_CONNECTION_CLOSED_USER
 });

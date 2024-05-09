@@ -31,7 +31,7 @@ const initialState: IUserStore = {
 }
 
 export const profileReducer = (state = initialState, action: TProfileActions) => {
-    switch(action.type) {
+    switch (action.type) {
         case PROFILE_REQUEST: {
             return {
                 ...state,
@@ -49,7 +49,7 @@ export const profileReducer = (state = initialState, action: TProfileActions) =>
                 message: action.error
             }
         }
-        case REGISTER_SUCCESS : {
+        case REGISTER_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
@@ -96,7 +96,7 @@ export const profileReducer = (state = initialState, action: TProfileActions) =>
                 user: null
             }
         }
-        default: 
+        default:
             return state
     }
 }

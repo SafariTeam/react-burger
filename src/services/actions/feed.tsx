@@ -1,4 +1,5 @@
 import { request, url_web_feed, url_web_orders } from "../../api/api";
+import { AppDispatch } from "../store";
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
@@ -14,7 +15,7 @@ export type TOrdersFeed = {
     number: number;
     name: string;
     status: string;
-    createdAt: string 
+    createdAt: string
     _id: string;
     price: number;
     updatedAt: string;
@@ -29,7 +30,7 @@ export interface IWSFeedConnectAction {
     type: typeof WS_CONNECTION_START;
     payload: string;
 };
-  
+
 export interface IWSFeedConnectSuccessAction {
     type: typeof WS_CONNECTION_SUCCESS;
     payload: Event;
@@ -68,15 +69,15 @@ export type TWSFeedRootActions = {
     onMessage: typeof WS_GET_MESSAGE,
 };
 
-export type TWSFeedActions = 
-| IWSFeedConnectAction 
-| IWSFeedConnectSuccessAction 
-| IWSFeedConnectErrorAction 
-| IWSFeedConnectClosedAction 
-| IWSFeedGetMessageAction
-| IOrderRequestStartAction
-| IOrederRequestErrorAction
-| IFeedDataSuccess;
+export type TWSFeedActions =
+    | IWSFeedConnectAction
+    | IWSFeedConnectSuccessAction
+    | IWSFeedConnectErrorAction
+    | IWSFeedConnectClosedAction
+    | IWSFeedGetMessageAction
+    | IOrderRequestStartAction
+    | IOrederRequestErrorAction
+    | IFeedDataSuccess;
 
 export const WSOrdersFeedRootActions: TWSFeedRootActions = {
     wsInit: WS_CONNECTION_START,
@@ -119,22 +120,22 @@ export const WSClose = (): IWSFeedConnectClosedAction => ({
     type: WS_CONNECTION_CLOSED
 });
 
-export const getFeedInfoData = (id: string) => (dispatch: any) => {
+export const getFeedInfoData = (id: string) => (dispatch: AppDispatch) => {
     const data = {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
     };
     dispatch({
-      type: ORDER_REQUEST
+        type: ORDER_REQUEST
     });
-    request<TOrderData>(`orders/${id}`,data)
-    .then(res => {
-        console.log(id, res);
-      dispatch(feedInfoData(res.success,res.orders))
-    })
-    .catch(error => {
-      dispatch({type: ORDER_ERROR});
-    })
-  }
+    request<TOrderData>(`orders/${id}`, data)
+        .then(res => {
+            console.log(id, res);
+            dispatch(feedInfoData(res.success, res.orders))
+        })
+        .catch(error => {
+            dispatch({ type: ORDER_ERROR });
+        })
+}

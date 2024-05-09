@@ -15,17 +15,6 @@ const initialState: TWSFeedState = {
     totalToday: 0
 }
 
-const obj = {
-    ingredients: ["643d69a5c3f7b9001cfa0943","643d69a5c3f7b9001cfa093c","643d69a5c3f7b9001cfa093c"],
-    number: 38904,
-    name: "Краторный space бургер",
-    status: "done",
-    createdAt: "2024-04-28T19:31:45.731Z",
-    _id: "662ea42197ede0001d067fc0",
-    price: 0,
-    updatedAt: "2024-04-28T19:31:46.311Z",
-}
-
 export const userFeedReducer = (state = initialState, action: TWSFeedActionsUser) => {
     switch (action.type) {
         case WS_CONNECTION_START_USER: {

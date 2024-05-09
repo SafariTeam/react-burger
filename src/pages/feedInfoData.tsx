@@ -8,15 +8,15 @@ export default function FeedInfo() {
     const location = useLocation();
     const dispatch = useDispatch();
     useEffect(() => {
-        if(location.pathname.startsWith('/feed'))
+        if (location.pathname.startsWith('/feed'))
             dispatch(WSStart());
         else
-            return () => {dispatch(WSClose());}
-    },[location.pathname,dispatch]);
-    const {orders} = useSelector(store => store.feed);
+            return () => { dispatch(WSClose()); }
+    }, [location.pathname, dispatch]);
+    const { orders } = useSelector(store => store.feed);
     return (
         <div>
-            {orders.length > 0 && <FeedOrderDetails/>}
+            {orders.length > 0 && <FeedOrderDetails />}
         </div>
     )
 }

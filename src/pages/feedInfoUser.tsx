@@ -7,19 +7,19 @@ import { getCookie } from '../utils/cookies';
 
 export default function FeedInfoUser() {
     const accessToken = getCookie("authToken") as string;
-    const token = accessToken.split('Bearer ')[1];
+    const token = accessToken?.split('Bearer ')[1];
     const location = useLocation();
     const dispatch = useDispatch();
     useEffect(() => {
-        if(location.pathname.startsWith('/profile'))
+        if (location.pathname.startsWith('/profile'))
             dispatch(WSStartUser(token));
         else
-            return () => {dispatch(WSCloseUser());}
-    },[location.pathname,dispatch]);
-    const {orders} = useSelector(store => store.profileFeed);
+            return () => { dispatch(WSCloseUser()); }
+    }, [location.pathname, dispatch]);
+    const { orders } = useSelector(store => store.profileFeed);
     return (
         <div>
-            {orders.length > 0 && <FeedOrderDetailsUser/>}
+            {orders.length > 0 && <FeedOrderDetailsUser />}
         </div>
     )
 }

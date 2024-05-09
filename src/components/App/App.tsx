@@ -28,7 +28,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getItems());
-    // @ts-ignore
     dispatch(RequestUser());
   },[dispatch]);
 

@@ -1,5 +1,6 @@
 import { request } from "../../api/api";
 import { getCookie, setCookie } from "../../utils/cookies";
+import { AppDispatch } from "../store";
 import { IIngredient } from "./ingredients";
 import { IUserRequest } from "./profile";
 
@@ -22,10 +23,10 @@ export interface IOrderSuccess {
   readonly order: number;
 }
 
-export type TOrderActions = 
-| IOrderRequest
-| IOrderFailed
-| IOrderSuccess;
+export type TOrderActions =
+  | IOrderRequest
+  | IOrderFailed
+  | IOrderSuccess;
 
 export const orderSuccessAction = (name: string, order: number): IOrderSuccess => ({
   type: MAKE_ORDER_SUCCESS,
@@ -39,13 +40,13 @@ export const orderFailedAction = (error: string): IOrderFailed => ({
 });
 
 type TOrderRequest = {
-  success:boolean;
+  success: boolean;
   name: string,
-  order: {number:number}
+  order: { number: number }
 }
 
-export const makeOrder = (order: ReadonlyArray<IIngredient>) => (dispatch: any) => {
-  const body = {ingredients: order.map((item) => { return item._id})};
+export const makeOrder = (order: ReadonlyArray<IIngredient>) => (dispatch: AppDispatch) => {
+  const body = { ingredients: order.map((item) => { return item._id }) };
   const data = {
     method: "POST",
     body: JSON.stringify(body),
@@ -57,43 +58,42 @@ export const makeOrder = (order: ReadonlyArray<IIngredient>) => (dispatch: any) 
   dispatch({
     type: MAKE_ORDER_REQUEST
   });
-  request<TOrderRequest>(`orders`,data)
-  .then(res => {
-    dispatch(orderSuccessAction(res.name,res.order.number))
-  })
-  .catch(error => {
-    dispatch(orderFailedAction(error));
-    if(error === "jwt expired")
-      {
+  request<TOrderRequest>(`orders`, data)
+    .then(res => {
+      dispatch(orderSuccessAction(res.name, res.order.number))
+    })
+    .catch(error => {
+      dispatch(orderFailedAction(error));
+      if (error === "jwt expired") {
         UpdateToken();
         makeOrder(order);
       }
-  })
+    })
 }
 
 const UpdateToken = (): void => {
   const token = localStorage.getItem('refreshToken');
-  if(!token)
-      return;
-  const body = {token: token};
+  if (!token)
+    return;
+  const body = { token: token };
   const data = {
-  method: "POST",
-  body: JSON.stringify(body),
-  headers: {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
       "Content-type": "application/json; charset=UTF-8"
-      }
+    }
   };
-  request<IUserRequest>('auth/token',data)
-  .then(res => {
+  request<IUserRequest>('auth/token', data)
+    .then(res => {
       let authToken;
       if (res.accessToken.indexOf('Bearer') === 0) {
-          authToken = res.accessToken;
+        authToken = res.accessToken;
       }
       if (authToken) {
-          setCookie('authToken', authToken);
+        setCookie('authToken', authToken);
       }
-      localStorage.setItem('refreshToken',res.refreshToken);
-  })
-  .catch(error => {
-  });
+      localStorage.setItem('refreshToken', res.refreshToken);
+    })
+    .catch(error => {
+    });
 }

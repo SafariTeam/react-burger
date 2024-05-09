@@ -20,10 +20,10 @@ const OrdersInfo: FC<TFeedInfo> = (props) => {
   }, []);
 
   const doneItems = useMemo(() => {
-    return orders.map((item: TOrdersFeed, index: number) => {
+    return orders.map((item, index) => {
       return item.status === "done" && index <= 10 ? done(item) : null;
     });
-  }, [orders,done]);
+  }, [orders, done]);
 
   const pending = useCallback((item: TOrdersFeed) => {
     return (
@@ -34,12 +34,12 @@ const OrdersInfo: FC<TFeedInfo> = (props) => {
   }, []);
 
   const pendingItems = useMemo(() => {
-    return orders.map((item: TOrdersFeed, index: number) => {
+    return orders.map((item, index) => {
       return item.status === "pending" && index <= 10
         ? pending(item)
         : null;
     });
-  }, [orders,pending]);
+  }, [orders, pending]);
 
   return (
     <div className={style.wrapData}>

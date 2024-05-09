@@ -4,7 +4,7 @@ import style from './BurgerConstructor.module.css';
 import ConstructorItem from "./ConstructorItem";
 import Modal from "../Modal";
 import OrderDetails from "../OrderDetails";
-import {generateKey, orderSum} from '../../utils/helpers';
+import { generateKey, orderSum } from '../../utils/helpers';
 import { DropTargetMonitor, useDrop } from "react-dnd";
 import { CLEAR_ITEMS, addIngredient } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
@@ -22,39 +22,37 @@ const BurgerConstructor = () => {
 
     function displayModal(): void {
         closeModal();
-        dispatch({type: CLEAR_ITEMS});
+        dispatch({ type: CLEAR_ITEMS });
     }
 
     function createOrder() {
-        if(user)
-        {
-            if(bunItem !== null)
-                dispatch(makeOrder([...addedItems,bunItem]));
+        if (user) {
+            if (bunItem !== null)
+                dispatch(makeOrder([...addedItems, bunItem]));
             else
                 dispatch(makeOrder([...addedItems]));
             openModal();
         }
-        else
-        {
+        else {
             navigate('/login');
         }
     }
 
-    const card = useCallback((item: TIngredient,index: number) => {
+    const card = useCallback((item: TIngredient, index: number) => {
         return (
-            <ConstructorItem key={item.uid} item={{...item, dragIndex: index}} isDraggable={true} index={item.uid} dragIndex={index} />
+            <ConstructorItem key={item.uid} item={{ ...item, dragIndex: index }} isDraggable={true} index={item.uid} dragIndex={index} />
         )
-    },[])
+    }, [])
 
     const content = useMemo(
         () => {
-                return addedItems.map((item: TIngredient,index: number) => {return card(item,index)});
+            return addedItems.map((item: TIngredient, index: number) => { return card(item, index) });
         }, [addedItems]
     );
 
     const ttlPrice = useMemo(() => {
         return addedItems.length > 0 || bunItem ? orderSum((addedItems as TIngredient[]), (bunItem?.price as number)) : 0;
-    },[addedItems,bunItem]); 
+    }, [addedItems, bunItem]);
 
     const [{ isHover }, dropTarget] = useDrop(() => ({
         accept: 'ingredient',
@@ -72,13 +70,13 @@ const BurgerConstructor = () => {
     return (
         <div className={style.sideMenu + ' mt-25'}>
             <div className="ml-8 pl-6">
-                {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'top'} isLocked={true} dragIndex={999}/>}
+                {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'top'} isLocked={true} dragIndex={999} />}
             </div>
             <div className={style.wrapData} ref={dropTarget}>
                 {content}
             </div>
             <div className="ml-8 pl-6">
-            {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'bottom'} isLocked={true} dragIndex={999}/>}
+                {bunItem && <ConstructorItem item={bunItem} isDraggable={false} type={'bottom'} isLocked={true} dragIndex={999} />}
             </div>
             <section className={`${style.orderProcceed} mt-7 mb-7`}>
                 <span className={`${style.price} m-1 text text_type_digits-default mr-10`}>
@@ -89,7 +87,7 @@ const BurgerConstructor = () => {
                     Оформить заказ
                 </Button>
             </section>
-            {toggleModal ? <Modal onClose={displayModal}><OrderDetails/></Modal> : null}
+            {toggleModal ? <Modal onClose={displayModal}><OrderDetails /></Modal> : null}
         </div>
     );
 }

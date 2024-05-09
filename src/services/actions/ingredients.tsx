@@ -1,5 +1,6 @@
 import { request } from '../../api/api';
 import { TIngredient } from '../../components/BurgerIngredients/Ingredient';
+import { AppDispatch } from '../store';
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
@@ -65,15 +66,15 @@ export interface IClearIngredients {
   readonly type: typeof CLEAR_ITEMS;
 }
 
-export type TIngredientsActions = 
-| IGetIngredientsRequest
-| IGetIngredientsFailed
-| IGetIngredientsSuccess
-| ISetActiveTab
-| IAddIngredient
-| IRemoveIngredient
-| IMoveIngredient
-| IClearIngredients;
+export type TIngredientsActions =
+  | IGetIngredientsRequest
+  | IGetIngredientsFailed
+  | IGetIngredientsSuccess
+  | ISetActiveTab
+  | IAddIngredient
+  | IRemoveIngredient
+  | IMoveIngredient
+  | IClearIngredients;
 
 export const getIngredientsAction = (): IGetIngredientsRequest => ({
   type: GET_INGREDIENTS_REQUEST
@@ -95,7 +96,7 @@ export const setActiveTabAction = (tab: string): ISetActiveTab => ({
 
 export const addIngredientAction = (item: IIngredient): IAddIngredient => ({
   type: ADD_ITEM,
-  item: {...item}
+  item: { ...item }
 });
 
 export const removeIngredientAction = (item: IIngredient): IRemoveIngredient => ({
@@ -108,7 +109,7 @@ type TIngredientsRequest = {
   data: ReadonlyArray<TIngredient>;
 }
 
-export const getItems = () => (dispatch: any) => {
+export const getItems = () => (dispatch: AppDispatch) => {
   dispatch(getIngredientsAction());
   request<TIngredientsRequest>('ingredients')
     .then(res => {
@@ -119,15 +120,15 @@ export const getItems = () => (dispatch: any) => {
     })
 }
 
-export const setActiveTab = (tab: string) => (dispatch: any) => {
+export const setActiveTab = (tab: string) => (dispatch: AppDispatch) => {
   dispatch(setActiveTabAction(tab));
 };
 
-export const addIngredient = (ingredient: IIngredient) => (dispatch: any) => {
+export const addIngredient = (ingredient: IIngredient) => (dispatch: AppDispatch) => {
   dispatch(addIngredientAction(ingredient));
 };
 
-export const removeIngredient = (ingredient: IIngredient) => (dispatch: any) => {
+export const removeIngredient = (ingredient: IIngredient) => (dispatch: AppDispatch) => {
   dispatch(removeIngredientAction(ingredient));
 };
 

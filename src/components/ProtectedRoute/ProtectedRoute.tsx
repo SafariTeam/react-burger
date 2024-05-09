@@ -9,21 +9,21 @@ type TProtectedRoute = {
     authIsRequired: boolean;
 }
 
-export const ProtectedRoute: FC<TProtectedRoute> = ( {children, authIsRequired} ) => {
+export const ProtectedRoute: FC<TProtectedRoute> = ({ children, authIsRequired }) => {
     const { user, isError } = useSelector(state => state.profile);
     const location = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(RequestUser());
-    },[dispatch]);
-    
-    if(getCookie('authToken') && !user)
+    }, [dispatch]);
+
+    if (getCookie('authToken') && !user)
         return null;
 
     if (authIsRequired)
-        return !isError && user ? 
-        (children) : (<Navigate to="/login" replace state={{ from: location }} />);
+        return !isError && user ?
+            (children) : (<Navigate to="/login" replace state={{ from: location }} />);
     else
         return !user ? children : <Navigate to="/" replace />;
 }

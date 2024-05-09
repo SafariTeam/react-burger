@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from '../services/store';
 
 export default function ForgotPassword() {
     const dispatch = useDispatch();
-    const {message} = useSelector(store => store.profile);
-    const [email,setEmail] = useState<string>('');
+    const { message } = useSelector(store => store.profile);
+    const [email, setEmail] = useState<string>('');
 
-    const Submit: ChangeEventHandler<HTMLFormElement> = e => {
+    const submit: ChangeEventHandler<HTMLFormElement> = e => {
         dispatch(RestorePassword(email));
         e.preventDefault();
     }
@@ -20,21 +20,20 @@ export default function ForgotPassword() {
         e.preventDefault();
     }
 
-    if(message === 'Reset email sent')
-    {
-        sessionStorage.setItem('passwordRequested','true');
-        return(<Navigate to='/reset-password' replace={true}/>);
+    if (message === 'Reset email sent') {
+        sessionStorage.setItem('passwordRequested', 'true');
+        return (<Navigate to='/reset-password' replace={true} />);
     }
 
     return (
         <div className={styles.contentWrapper}>
             <div>
                 <span className='text text_type_main-medium mb-6'>Восстановление пароля</span>
-                <form onSubmit={Submit}>
-                    <EmailInput placeholder='E-mail' name='email' value={email} onChange={onChange}/>
+                <form onSubmit={submit}>
+                    <EmailInput placeholder='E-mail' name='email' value={email} onChange={onChange} />
                     <Button htmlType='submit'>Восстановить</Button>
                 </form>
-                <span className='text text_type_main-small text_color_inactive mt-20'>Вспомнили пароль? 
+                <span className='text text_type_main-small text_color_inactive mt-20'>Вспомнили пароль?
                     <Link to='/login' className='text text_type_main-small ml-3'>Войти</Link>
                 </span>
             </div>

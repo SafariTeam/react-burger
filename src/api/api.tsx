@@ -11,8 +11,8 @@ const checkSuccess = (res: any) => {
     return res?.success ? res : Promise.reject(`Ответ не success: ${res}`);
 };
 
-export function request<T> (endpoint: string, data?: any): Promise<T> {
-    return fetch(`${url}/${endpoint}`,data)
-    .then<Response>(checkResponse)
-    .then(checkSuccess);
+export function request<T>(endpoint: string, data?: any): Promise<T> {
+    return fetch(`${url}/${endpoint}`, data)
+        .then<Response>(checkResponse)
+        .then(checkSuccess);
 };

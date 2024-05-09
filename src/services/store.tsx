@@ -8,7 +8,7 @@ import { TIngredientsActions } from "./actions/ingredients";
 import { TOrderActions } from "./actions/order";
 import { TProfileActions } from "./actions/profile";
 import { TWSFeedActions, WSOrdersFeedRootActions } from "./actions/feed";
-import type {} from "redux-thunk/extend-redux";
+import type { } from "redux-thunk/extend-redux";
 import { socketMiddleware } from "../middleware/socketMiddleware";
 import { url_web_feed, url_web_orders, url_web_socket } from "../api/api";
 import { feedReducer } from "./reducers/feed";
@@ -37,5 +37,5 @@ export const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([socketMiddleware(WSOrdersFeedRootActions,url_web_socket),socketMiddleware(WSOrdersFeedRootActionsUser,url_web_orders)])
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([socketMiddleware(WSOrdersFeedRootActions, url_web_socket), socketMiddleware(WSOrdersFeedRootActionsUser, url_web_orders)])
 });

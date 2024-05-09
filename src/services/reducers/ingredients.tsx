@@ -30,7 +30,7 @@ const initialState: IngredientStore = {
 }
 
 export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
                 ...state,
@@ -39,16 +39,16 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
         }
         case GET_INGREDIENTS_SUCCESS: {
             return {
-                ...state, 
-                itemsFailed: false, 
-                itemsRequest: false, 
+                ...state,
+                itemsFailed: false,
+                itemsRequest: false,
                 items: action.items
             };
         }
         case GET_INGREDIENTS_FAILED: {
             return {
-                ...state, 
-                itemsFailed: true, 
+                ...state,
+                itemsFailed: true,
                 itemsRequest: false
             };
         }
@@ -59,8 +59,8 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
             }
         }
         case ADD_ITEM: {
-            if(action.item.type === 'bun')
-                return { ...state, bunItem: action.item}
+            if (action.item.type === 'bun')
+                return { ...state, bunItem: action.item }
 
             return {
                 ...state,
