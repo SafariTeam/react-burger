@@ -74,12 +74,12 @@ const OrderListItem: FC<TOrderItemData> = (props) => {
                 <div className={style.ingredientswrap}>
                     {getUniqueIngredients(ingredients).map((x, index) => {
                         if (index < 5)
-                            return <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}></div>;
+                            return x ? <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}></div> : null;
                         else if (index === 5) {
                             const count = ingredients.length - index;
-                            return <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}>
+                            return x ? <div className={style.ingredient} style={getStyle(index, x.image_mobile)} key={x._id}>
                                 <span className="text text_type_main-small pl-2">{`+${count}`}</span>
-                            </div>
+                            </div> : null
                         }
                         else
                             return null;
